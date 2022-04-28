@@ -3,9 +3,7 @@
  *   				        OpenGL Utilities 					
  *																		
  * Description:													
- * This file is part of lib_math. You can redistribute it and or modify 
- * it to construct your own project. It is wellcome to use this library
- * in your scientific research work.
+ *   A class for managing GLFWwindow.
  * 
  * @file 		gl_window.h 
  * 
