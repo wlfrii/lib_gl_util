@@ -4,7 +4,7 @@
  *																		
  * @file 		gl_window.h 
  * 
- * @brief 		A manager for the GLFWwindow object.
+ * @brief 		A manager for the GL texture.
  * 
  * @author		Longfei Wang
  * 
