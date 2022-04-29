@@ -85,12 +85,6 @@ void Window::activate()
 
 void Window::refresh()
 {
-    // Clear and reset window color, this step is just a STATUS SETTING
-    glClearColor(_color.R, _color.G, _color.B, _color.A);   
-    
-    // Clear previous color buffer and validate current color buffer
-    glClear(GL_COLOR_BUFFER_BIT); 
-
     // Swap the double buffer
     glfwSwapBuffers(_window);
 

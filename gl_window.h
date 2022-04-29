@@ -2,9 +2,6 @@
  *																		
  *   				        OpenGL Utilities 					
  *																		
- * Description:													
- *   A class for managing GLFWwindow.
- * 
  * @file 		gl_window.h 
  * 
  * @brief 		A manager for the GLFWwindow object.
@@ -37,7 +34,7 @@
 #include <cstdint>
 #include <string>
 #include <functional>
-#include "gl_module_ns.h"
+#include "gl_util_ns.h"
 
 struct GLFWwindow;
 
