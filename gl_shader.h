@@ -1,10 +1,10 @@
-/**--------------------------------------------------------------------
+/** -------------------------------------------------------------------
  *																		
  *   				        OpenGL Utilities 					
  *																		
  * @file 		gl_shader.h 
  * 
- * @brief 		A manager for shader program object.
+ * @brief 		A manager for shader program object
  * 
  * @author		Longfei Wang
  * 
@@ -37,6 +37,9 @@
 
 GL_UTIL_BEGIN
 
+/**
+ * @brief A manager for shader program object * 
+ */
 class Shader
 {
 public:
