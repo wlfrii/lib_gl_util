@@ -63,18 +63,24 @@ public:
 
     
     /**
-     * @brief Activate current window.
-     * This is useful when there are more than one GL Window exist.
+     * @brief Activate current window
+     * . This is useful when there are more than one GL Window exist.
      */
     void activate();
 
 
     /**
+     * @brief  Clear the window color and buffer
+     */
+    inline void clear();
+
+
+    /**
      * @brief Swap buffers
-     * Note, OpenGL adopts double-buffers to store the rendered image to avoid
+     * . Note, OpenGL adopts double-buffers to store the rendered image to avoid
      * the display flickering that may occur in single buffer mode.
      */
-    void refresh();
+    inline void refresh();
 
 
     /**
@@ -83,13 +89,13 @@ public:
      *  - true, if the window should be closed
      *  - false. otherwise
      */
-    bool shouldClose();
+    inline bool shouldClose();
 
 
     /**
      * @brief Terminate GLFW library
      */
-    void release();
+    inline void release();
 
 
     /**
@@ -147,6 +153,43 @@ private:
     // The callback function for keyboard event
     std::function<void(GLFWwindow* window)> _callback_kbe;
 };
+
+
+/* ------------------------------------------------------------------- */
+/*                     Window Inline Implementation                    */
+/* ------------------------------------------------------------------- */
+
+inline void Window::clear()
+{
+    // Clear and reset window color, this step is just a STATUS SETTING
+    glClearColor(_color.R, _color.G, _color.B, _color.A/255.f);   
+    // Clear previous color buffer and validate current color buffer
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+
+inline void Window::refresh()
+{
+    // Swap the double buffer
+    glfwSwapBuffers(_window);
+
+    // Check the mouse/keyboard events
+    glfwPollEvents();
+}
+
+
+inline bool Window::shouldClose()
+{
+    return glfwWindowShouldClose(_window);
+}
+
+
+inline void Window::release()
+{
+    // Terminate GLFW library
+    glfwTerminate();
+}
+
 
 GL_UTIL_END
 #endif // GL_UTIL_WINDOW_H_LF

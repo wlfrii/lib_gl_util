@@ -83,29 +83,6 @@ void Window::activate()
 }
 
 
-void Window::refresh()
-{
-    // Swap the double buffer
-    glfwSwapBuffers(_window);
-
-    // Check the mouse/keyboard events
-    glfwPollEvents();
-}
-
-
-bool Window::shouldClose()
-{
-    return glfwWindowShouldClose(_window);
-}
-
-
-void Window::release()
-{
-    // Terminate GLFW library
-    glfwTerminate();
-}
-
-
 void Window::setBackgroundColor(uint8_t R, uint8_t G, uint8_t B, uint8_t A)
 {
     _color.R = R / 255.f;
