@@ -98,13 +98,62 @@ public:
 
 
     /**
+     * @brief Set the 3 float object to Shader (GLSL)
+     * .See also setVec3()
+     * 
+     * @param name  The name of object in GLSL
+     * @param x  The value to be set
+     * @param y  The value to be set
+     * @param z  The value to be set
+     */
+    inline void setFloat3(const std::string &name, float x, float y, float z) const;
+
+
+    /**
+     * @brief Set the 4 float object to Shader (GLSL)
+     * .See also setVec4()
+     * 
+     * @param name  The name of object in GLSL
+     * @param x  The value to be set
+     * @param y  The value to be set
+     * @param z  The value to be set
+     * @param w  The value to be set
+     */
+    inline void setFloat4(const std::string &name, float x, float y, float z, float w) const;
+
+
+    /**
      * @brief Set the 'vec3f' object to Shader (GLSL)
-     * The common 'vec3f' includes the position, the color, et al.
+     * .The common 'vec3f' includes the position, the color, et al.
      * 
      * @param name  The name of 'vec3f' object in GLSL
      * @param value  The value to be set
      */
     inline void setVec3f(const std::string &name, const glm::vec3 &vec) const;
+
+
+    /**
+     * @brief Override: Set the 3 float object to Shader (GLSL)
+     * .See also setFloat3(), setVec3()
+     */
+    inline void setVec3f(const std::string &name, float x, float y, float z) const;
+
+
+    /**
+     * @brief Set the 'vec4f' object to Shader (GLSL)
+     * The common 'vec4f' includes the position, the color, et al.
+     * 
+     * @param name  The name of 'vec4f' object in GLSL
+     * @param value  The value to be set
+     */
+    inline void setVec4f(const std::string &name, const glm::vec4 &vec) const;
+
+
+    /**
+     * @brief Override: Set the 4 float object to Shader (GLSL)
+     * .See also setFloat4(), setVec4()
+     */
+    inline void setVec4f(const std::string &name, float x, float y, float z, float w) const;
 
 
     /**
@@ -296,10 +345,48 @@ inline void Shader::setFloat(const std::string &name, float value) const
 }
 
 
+inline void Shader::setFloat3(const std::string &name, float x, float y, float z) const
+{
+    if(!isShaderValid()) return;
+    glUniform3f(glGetUniformLocation(_ID, name.c_str()), x, y, z); 
+}
+
+
+inline void Shader::setFloat4(const std::string &name, float x, float y, float z, float w) const
+{
+    if(!isShaderValid()) return;
+    glUniform4f(glGetUniformLocation(_ID, name.c_str()), x, y, z, w); 
+}
+
+
 inline void Shader::setVec3f(const std::string &name, const glm::vec3 &vec) const
 {
     if(!isShaderValid()) return;
     glUniform3fv(glGetUniformLocation(_ID, name.c_str()), 1, glm::value_ptr(vec));
+}
+
+
+inline void Shader::setVec3f(const std::string &name, float x, float y, float z) const
+{
+    if(!isShaderValid()) return;
+
+    glm::vec3 vec(x,y,z);
+    glUniform3fv(glGetUniformLocation(_ID, name.c_str()), 1, glm::value_ptr(vec));
+}
+
+inline void Shader::setVec4f(const std::string &name, const glm::vec4 &vec) const
+{
+    if(!isShaderValid()) return;
+    glUniform4fv(glGetUniformLocation(_ID, name.c_str()), 1, glm::value_ptr(vec));
+}
+
+
+inline void Shader::setVec4f(const std::string &name, float x, float y, float z, float w) const
+{
+    if(!isShaderValid()) return;
+
+    glm::vec4 vec(x,y,z,w);
+    glUniform4fv(glGetUniformLocation(_ID, name.c_str()), 1, glm::value_ptr(vec));
 }
 
 
