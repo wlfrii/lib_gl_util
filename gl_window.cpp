@@ -28,6 +28,7 @@ Window::Window(uint16_t width, uint16_t height, uint8_t ver_major, uint8_t ver_m
     : _win_width(width)
     , _win_height(height)
     , _win_name("Displayer")
+    , _is_depth_test_on(false)
 {
     /** Initialize GLFW **/
     glfwInit();
@@ -50,12 +51,11 @@ Window::Window(uint16_t width, uint16_t height, uint8_t ver_major, uint8_t ver_m
     // GLAD is used to manage the pointers of OpenGL functions and the right 
     // header files are included in GLAD, so the intialization for GLAD should 
     // be done before call any OpenGL interface.
-    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-        GL_LOG("Failed to initialize GLAD.\n");
+    if(!initGLAD()){
         exit(-1);
     }
 
-    _color = {0.2, 0.3, 0.3, 1.0};
+    _color = {50, 75, 75, 255};
 }
 
 
@@ -85,10 +85,7 @@ void Window::activate()
 
 void Window::setBackgroundColor(uint8_t R, uint8_t G, uint8_t B, uint8_t A)
 {
-    _color.R = R / 255.f;
-    _color.G = G / 255.f;
-    _color.B = B / 255.f;
-    _color.A = A / 255.f;
+    _color = {R, G, B, A};
 }
 
 

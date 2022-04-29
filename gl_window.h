@@ -1,4 +1,4 @@
-/**--------------------------------------------------------------------
+/** -------------------------------------------------------------------
  *																		
  *   				        OpenGL Utilities 					
  *																		
@@ -19,6 +19,8 @@
  * --------------------------------------------------------------------
  * Change History:                        
  * 
+ * 2022.4.29 Add interface to enable/disable DepthTest, so that the 
+ *   depth buffer will also be clear when the Window::clear() be called.
  * 2022.4.28 Refactor the codes:
  *   # Complete set to fullscreen interface;
  *   # Add set user defined keyboard event function interface;
@@ -99,6 +101,21 @@ public:
 
 
     /**
+     * @brief Enable depth test
+     * . So that OpenGL while detemine which pixel should be showed and which 
+     * pixel should be hiddened based on the Z-buffer.
+     */
+    inline void enableDepthTest();
+
+
+    /**
+     * @brief Disable depth test
+     * . See also enableDepth();
+     */
+    inline void disableDepthTest();
+
+
+    /**
      * @brief Set the background color of the window
      * 
      * @param R  The red value
@@ -144,15 +161,59 @@ private:
     std::string _win_name;      //!< The name of the window
 
     struct{
-        float R;
-        float G;
-        float B;
-        float A;
+        uint8_t R;
+        uint8_t G;
+        uint8_t B;
+        uint8_t A;
     }_color;                    //!< The background color of the window
 
     // The callback function for keyboard event
     std::function<void(GLFWwindow* window)> _callback_kbe;
+
+    bool _is_depth_test_on;     //!< The flag for depth test
 };
+
+/* ------------------------------------------------------------------- */
+/*                            Window Utility                           */
+/* ------------------------------------------------------------------- */
+
+/**
+ * @brief GLAD load all the OpenGL function pointers
+ * . GLAD is used to manage the pointers of OpenGL functions, so the 
+ * intialization for GLAD should be done before call any OpenGL interface.
+ * 
+ * @return true if success, otherwise return false 
+ * 
+ * NOTE, the GLAD was initialized if any gl_util::Window was created.
+ */
+inline bool initGLAD()
+{
+    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
+        GL_LOG("Failed to initialize GLAD.\n");
+        return false;
+    }
+    return true;
+}
+
+
+/**
+ * @brief Clear the window color and buffer
+ * . Same as the class function Window::clear().
+ * NOTE, this function should be called before any glDraw operation. If the
+ * function is called after glDraw operation, the buffer will be cleared.
+ */
+inline void clear(uint8_t R = 50, uint8_t G = 75, uint8_t B = 75, uint8_t A = 255, bool is_depth_on = false)
+{
+    // Clear and reset window color, this step is just a STATUS SETTING
+    glClearColor(R/255.f, G/255.f, B/255.f, A/255.f);   
+    // Clear previous color buffer and validate current color buffer
+    glClear(GL_COLOR_BUFFER_BIT); 
+
+    // Clear depth buffer if the Depth Test Enabled
+    if(is_depth_on){
+        glClear(GL_DEPTH_BUFFER_BIT);
+    }
+}
 
 
 /* ------------------------------------------------------------------- */
@@ -161,10 +222,7 @@ private:
 
 inline void Window::clear()
 {
-    // Clear and reset window color, this step is just a STATUS SETTING
-    glClearColor(_color.R, _color.G, _color.B, _color.A/255.f);   
-    // Clear previous color buffer and validate current color buffer
-    glClear(GL_COLOR_BUFFER_BIT);
+    gl_util::clear(_color.R, _color.G, _color.B, _color.A, _is_depth_test_on);
 }
 
 
@@ -173,7 +231,7 @@ inline void Window::refresh()
     // Swap the double buffer
     glfwSwapBuffers(_window);
 
-    // Check the mouse/keyboard events
+    // Check the keys pressed/released, mouse moved etc. events
     glfwPollEvents();
 }
 
@@ -190,6 +248,19 @@ inline void Window::release()
     glfwTerminate();
 }
 
+
+inline void Window::enableDepthTest()
+{
+    glEnable(GL_DEPTH_TEST);
+    _is_depth_test_on = true;
+}
+
+
+inline void Window::disableDepthTest()
+{
+    glDisable(GL_DEPTH_TEST);
+    _is_depth_test_on = false;
+}
 
 GL_UTIL_END
 #endif // GL_UTIL_WINDOW_H_LF
