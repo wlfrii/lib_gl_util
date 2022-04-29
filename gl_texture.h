@@ -119,7 +119,7 @@ Texture2D::~Texture2D()
 bool Texture2D::loadImage(const std::string& texture_path, GLint st_warp, GLint min_filter, GLint mag_filter)
 {
     if(_has_texture){
-        GL_LOG("WARNING: Current shader program object will be replaced!\n");
+        GL_UTIL_LOG("WARNING: Current shader program object will be replaced!\n");
         release();
     }
 
@@ -148,7 +148,7 @@ bool Texture2D::loadImage(const std::string& texture_path, GLint st_warp, GLint 
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else {
-        GL_LOG("Failed to load texture: %s\n", texture_path.c_str());
+        GL_UTIL_LOG("Failed to load texture: %s\n", texture_path.c_str());
         return false;
     }
     stbi_image_free(data);
@@ -172,7 +172,7 @@ void Texture2D::bind()
     case 7:  glActiveTexture(GL_TEXTURE7);  break;
     case 8:  glActiveTexture(GL_TEXTURE8);  break;
     default:
-        GL_LOG("Current version only support 8 texture.\n");
+        GL_UTIL_LOG("Current version only support 8 texture.\n");
         return;
     }
     glBindTexture(GL_TEXTURE_2D, _texture);

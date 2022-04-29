@@ -28,5 +28,6 @@
 #include "gl_shader.h"
 #include "gl_vavbebo.h"
 #include "gl_texture.h"
+#include "gl_camera.h"
 
 #endif // GL_UTILITY_H_LF

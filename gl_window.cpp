@@ -118,7 +118,7 @@ bool Window::createGLFWwindow()
 {
     _window = glfwCreateWindow(_win_width, _win_height, _win_name.c_str(), nullptr, nullptr);
     if(_window == nullptr){
-        GL_LOG("Failed to creat GLFW window.\n");
+        GL_UTIL_LOG("Failed to creat GLFW window.\n");
         glfwTerminate();
         return false;
     }

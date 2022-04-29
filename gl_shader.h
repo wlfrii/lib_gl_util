@@ -214,8 +214,7 @@ inline void checkShaderCompileErrors(unsigned int shader, std::string type)
         if (!success)
         {
             glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-            GL_LOG("ERROR: Shader compilation error of type: %s\n\t%s\n",
-                type.c_str(), infoLog);
+            GL_UTIL_LOG("ERROR: Shader compilation error of type: %s\n\t%s\n", type.c_str(), infoLog);
         }
     }
     else
@@ -225,8 +224,7 @@ inline void checkShaderCompileErrors(unsigned int shader, std::string type)
         if (!success)
         {
             glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-            GL_LOG("ERROR: Shader program linking error of type: %s\n\t%s\n",
-                type.c_str(), infoLog);
+            GL_UTIL_LOG("ERROR: Shader program linking error of type: %s\n\t%s\n", type.c_str(), infoLog);
         }
     }
 }
@@ -251,7 +249,7 @@ Shader::~Shader()
 bool Shader::load(const std::string &vs_path, const std::string &fs_path)
 {
     if(_has_created){
-        GL_LOG("WARNING: Current shader program object will be replaced!\n");
+        GL_UTIL_LOG("WARNING: Current shader program object will be replaced!\n");
         release();
     }
 
@@ -279,7 +277,7 @@ bool Shader::load(const std::string &vs_path, const std::string &fs_path)
     }
     catch (std::ifstream::failure& e)
     {
-        GL_LOG("ERROR: Files are not successfully read\n");
+        GL_UTIL_LOG("ERROR: Files are not successfully read\n");
         return _has_created;
     }
     const char* vs_code = vertex_code.c_str();
@@ -404,7 +402,7 @@ inline bool Shader::isShaderValid() const
 {
     if(_has_created) return true;
     
-    GL_LOG("ERROR: Shader object is not valid!\n");
+    GL_UTIL_LOG("ERROR: Shader object is not valid!\n");
     return false;
 }
 

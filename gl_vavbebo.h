@@ -120,7 +120,7 @@ inline void VAVBEBO::bind(float* vertices, size_t vertices_size, unsigned int* i
 inline void VAVBEBO::bindVertexArray()
 {
     if(!_is_bind){
-        GL_LOG("ERROR: No valid vertices are binded to VAVBEBO object!\n");
+        GL_UTIL_LOG("ERROR: No valid vertices are binded to VAVBEBO object!\n");
         return;
     }  
     glBindVertexArray(_vao);

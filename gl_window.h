@@ -189,7 +189,7 @@ private:
 inline bool initGLAD()
 {
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-        GL_LOG("Failed to initialize GLAD.\n");
+        GL_UTIL_LOG("Failed to initialize GLAD.\n");
         return false;
     }
     return true;
