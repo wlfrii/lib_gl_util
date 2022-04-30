@@ -113,8 +113,18 @@ public:
      * @brief Enable depth test
      * . So that OpenGL while detemine which pixel should be showed and which 
      * pixel should be hiddened based on the Z-buffer.
+     * 
+     * @param depth_cmp The method to compare deptht, the optional setting are:
+     *  - GL_ALWAYS
+     *  - GL_NEVER
+     *  - GL_LESS
+     *  - GL_EQUAL
+     *  - GL_LEQUAL
+     *  - GL_GREATER
+     *  - GL_NOTEQUAL
+     *  - GL_GEQUAL
      */
-    inline void enableDepthTest();
+    inline void enableDepthTest(size_t depth_cmp = GL_LESS);
 
 
     /**
@@ -265,9 +275,10 @@ inline void Window::release()
 }
 
 
-inline void Window::enableDepthTest()
+inline void Window::enableDepthTest(size_t depth_cmp)
 {
     glEnable(GL_DEPTH_TEST);
+    glDepthFunc(depth_cmp);
     _is_depth_test_on = true;
 }
 
