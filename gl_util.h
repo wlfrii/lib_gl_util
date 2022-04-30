@@ -30,4 +30,17 @@
 #include "gl_texture.h"
 #include "gl_camera.h"
 
+
+GL_UTIL_BEGIN
+
+void print(const std::string& name, const glm::mat4& mat){
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            printf("%f,", mat[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+GL_UTIL_END
 #endif // GL_UTILITY_H_LF

@@ -42,7 +42,8 @@ struct GLFWwindow;
 
 GL_UTIL_BEGIN
 
-typedef void (*CallbackKeyboardEvent)(GLFWwindow* window);
+typedef std::function<void(GLFWwindow* window)> CallbackKeyboardEvent;
+
 
 /**
  * @brief A windows class which help to manage GLFWwindow object.
@@ -63,7 +64,15 @@ public:
     Window(uint16_t width, uint16_t height, uint8_t ver_major = 3, uint8_t ver_minor = 3);
     ~Window();
 
+
+    /**
+     * @brief Get the manged GLFWwindow object
+     * 
+     * @return The managed GLFWwindow object
+     */
+    inline GLFWwindow* get() const;
     
+
     /**
      * @brief Activate current window
      * . This is useful when there are more than one GL Window exist.
@@ -148,6 +157,7 @@ public:
      */
     void setKeyboardEventCallBack(CallbackKeyboardEvent callbackfunc);
 
+
 private:
     /* Create GLFW window */ 
     bool createGLFWwindow();
@@ -167,10 +177,10 @@ private:
         uint8_t A;
     }_color;                    //!< The background color of the window
 
-    // The callback function for keyboard event
-    std::function<void(GLFWwindow* window)> _callback_kbe;
-
     bool _is_depth_test_on;     //!< The flag for depth test
+
+    // The callback function for keyboard event
+    CallbackKeyboardEvent    _callback_kbe;
 };
 
 /* ------------------------------------------------------------------- */
@@ -219,6 +229,12 @@ inline void clear(uint8_t R = 50, uint8_t G = 75, uint8_t B = 75, uint8_t A = 25
 /* ------------------------------------------------------------------- */
 /*                     Window Inline Implementation                    */
 /* ------------------------------------------------------------------- */
+
+inline GLFWwindow* Window::get() const
+{
+    return _window;
+}
+
 
 inline void Window::clear()
 {

@@ -1,11 +1,37 @@
-#ifndef LEARN_OPENGL_CAMERA_H_LF
-#define LEARN_OPENGL_CAMERA_H_LF
+/** -------------------------------------------------------------------
+ *																		
+ *   				        OpenGL Utilities 					
+ *																		
+ * @file 		gl_camera.h 
+ * 
+ * @brief 		A manager for the GL camera
+ * 
+ * @author		Longfei Wang
+ * 
+ * @version		2.0.0
+ * 
+ * @date		2021/10/08
+ * 
+ * @license		
+ * 
+ * Copyright (C) 2021 Longfei Wang.
+ * 
+ * --------------------------------------------------------------------
+ * Change History:                        
+ * 
+ * 2022.4.29 Refactor the codes.
+ * * --------------------------------------------------------------------
+ * References:
+ * https://learnopengl-cn.github.io/01%20Getting%20started/09%20Camera/
+ * -------------------------------------------------------------------*/
+#ifndef GL_UTIL_CAMERA_H_LF
+#define GL_UTIL_CAMERA_H_LF
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <vector>
+#include "gl_util_ns.h"
 
-namespace gll{
-
+GL_UTIL_BEGIN
 
 // Default camera values
 const float YAW         = -90.0f;   // rotate by y-axis
@@ -16,8 +42,8 @@ const float ZOOM        = 45.0f;
 
 /**
  * @brief An abstract camera class that processes input and calculates the 
- * corresponding Euler Angles, Vectors and Matrices for use in OpenGL.
- * 
+ * corresponding Euler Angles, Vectors and Matrices for using in OpenGL.
+ * Note, the z-axis of the GL camera is oriented from screen to you.
  */
 class Camera
 {
@@ -36,6 +62,7 @@ public:
         MOVE_DOWN
     };
 
+
     Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH)
         : _front(glm::vec3(0.0f, 0.0f, -1.0f))
         , _move_speed(SPEED)
@@ -50,11 +77,11 @@ public:
     }
 
     /**
-     * @brief Get the View Matrix calculated using Euler Angles
+     * @brief Get the View Matrix calculated by Euler Angles
      * 
      * @return glm::mat4 
      */
-    glm::mat4 getViewMatrix()
+    glm::mat4 getViewMatrix() const
     {
         return glm::lookAt(_position, _position + _front, _up);
     }
@@ -135,7 +162,7 @@ private:
     }
 
     // Camera attributes
-    glm::vec3 _position;
+    glm::vec3 _position;  //!< The position of camera w.r.t {W}
     glm::vec3 _front;
     glm::vec3 _up;
     glm::vec3 _right;
@@ -149,5 +176,11 @@ private:
     float _fov;
 };
 
-} // namespace::gll
-#endif // LEARN_OPENGL_CAMERA_H_LF
+/* ------------------------------------------------------------------- */
+/*                         Camera Implementation                       */
+/* ------------------------------------------------------------------- */
+
+
+
+GL_UTIL_END
+#endif // GL_UTIL_CAMERA_H_LF

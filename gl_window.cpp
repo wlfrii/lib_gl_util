@@ -75,7 +75,7 @@ void Window::activate()
 
     // Monitoring kewboard event
     if(_callback_kbe){
-        _callback_kbe(this->_window);
+        _callback_kbe(this->_window); 
     }
     else{
         processKeyboardEvent();

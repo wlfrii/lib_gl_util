@@ -30,19 +30,4 @@
 #define GL_UTIL_LOG(fmt, ...) \
     printf("[%s][%s][%d] " fmt, __FILE__, __func__, __LINE__, ##__VA_ARGS__)
 
-
-GL_UTIL_BEGIN
-
-void print(const std::string& name, const glm::mat4& mat){
-    for(int i = 0; i < 4; i++){
-        for(int j = 0; j < 4; j++){
-            printf("%f,", mat[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
-
-
-GL_UTIL_END
 #endif // GL_WARPPER_NS_H_LF
