@@ -23,6 +23,7 @@
  * -------------------------------------------------------------------*/
 #ifndef GL_UTIL_NS_H_LF
 #define GL_UTIL_NS_H_LF
+#include <cstdio>
 
 #define GL_UTIL_BEGIN namespace gl_util{
 #define GL_UTIL_END }

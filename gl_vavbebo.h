@@ -25,6 +25,7 @@
 #ifndef GL_UTIL_VAVBEBO_H_LF
 #define GL_UTIL_VAVBEBO_H_LF
 #include <glad/glad.h>
+#include <cstddef>
 #include "gl_util_ns.h"
 
 GL_UTIL_BEGIN
@@ -82,18 +83,6 @@ private:
 /* ------------------------------------------------------------------- */
 /*                        VAVBEBO implementation                       */
 /* ------------------------------------------------------------------- */
-
-VAVBEBO::VAVBEBO() 
-    : _is_bind(false) 
-{
-}
-
-
-VAVBEBO::~VAVBEBO() 
-{ 
-    release(); 
-}
-
 
 inline void VAVBEBO::bind(float* vertices, size_t vertices_size, unsigned int* indices, size_t indices_size, size_t gl_draw_mode)
 {

@@ -97,7 +97,7 @@ bool Window::setToFullScreen(uint8_t monitor_id)
         // Read the number of the available monitor
         int monitor_count = 0;
         GLFWmonitor** monitor = glfwGetMonitors(&monitor_count);
-        printf("[%d] monitors have been found.\n", monitor_count);
+        printf("gl_util::Window: [%d] monitors have been found.\n", monitor_count);
         if(monitor_id > monitor_count){
             printf("The specified monitor index out of valid range.\n");
             return ret;
@@ -107,7 +107,6 @@ bool Window::setToFullScreen(uint8_t monitor_id)
         const GLFWvidmode* mode = glfwGetVideoMode(monitor[monitor_id]);
         glfwSetWindowMonitor(_window, monitor[monitor_id], 0, 0,
                 mode->width, mode->height, mode->refreshRate);
-    
     }
     return ret;
 }

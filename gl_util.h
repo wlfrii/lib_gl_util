@@ -33,7 +33,8 @@
 
 GL_UTIL_BEGIN
 
-void print(const std::string& name, const glm::mat4& mat){
+inline void print(const std::string& name, const glm::mat4& mat){
+    printf("%s:\n", name.c_str());
     for(int i = 0; i < 4; i++){
         for(int j = 0; j < 4; j++){
             printf("%f,", mat[i][j]);
