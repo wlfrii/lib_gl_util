@@ -81,6 +81,12 @@ public:
 
 
     /**
+     * @brief Hidden current window 
+     */
+    inline void hidden();
+
+
+    /**
      * @brief  Clear the window color and buffer
      */
     inline void clear();
@@ -243,6 +249,12 @@ inline void clear(uint8_t R = 50, uint8_t G = 75, uint8_t B = 75, uint8_t A = 25
 inline GLFWwindow* Window::get() const
 {
     return _window;
+}
+
+
+inline void Window::hidden()
+{
+    glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
 }
 
 
