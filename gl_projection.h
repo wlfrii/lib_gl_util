@@ -1,3 +1,25 @@
+/** -------------------------------------------------------------------
+ *																		
+ *   				        OpenGL Utilities 					
+ *																		
+ * @file 		gl_projection.h 
+ * 
+ * @brief 		A manager for construct projection matrix.
+ * 
+ * @author		Longfei Wang
+ * 
+ * @version		2.0.0
+ * 
+ * @date		2021/10/08
+ * 
+ * @license		
+ * 
+ * Copyright (C) 2021 Longfei Wang.
+ * 
+ * --------------------------------------------------------------------
+ * Change History:                        
+ * 
+ * -------------------------------------------------------------------*/
 #ifndef GL_UTIL_PROJECTION_H_LF
 #define GL_UTIL_PROJECTION_H_LF
 #include <glm/glm.hpp>

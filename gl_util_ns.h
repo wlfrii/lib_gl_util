@@ -31,4 +31,5 @@
 #define GL_UTIL_LOG(fmt, ...) \
     printf("[%s][%s][%d] " fmt, __FILE__, __func__, __LINE__, ##__VA_ARGS__)
 
+
 #endif // GL_WARPPER_NS_H_LF

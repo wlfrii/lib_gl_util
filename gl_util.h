@@ -30,11 +30,13 @@
 #include "gl_texture.h"
 #include "gl_camera.h"
 
+#include "gl_projection.h"
 
+/* The other uitilities */
 GL_UTIL_BEGIN
 
-inline void print(const std::string& name, const glm::mat4& mat){
-    printf("%s:\n", name.c_str());
+inline void print(const char* name, const glm::mat4& mat){
+    printf("%s:\n", name);
     for(int i = 0; i < 4; i++){
         for(int j = 0; j < 4; j++){
             printf("%f,", mat[i][j]);
@@ -42,6 +44,6 @@ inline void print(const std::string& name, const glm::mat4& mat){
         printf("\n");
     }
 }
-
 GL_UTIL_END
+
 #endif // GL_UTILITY_H_LF
