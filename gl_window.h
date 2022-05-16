@@ -70,7 +70,7 @@ public:
      * 
      * @return The managed GLFWwindow object
      */
-    inline GLFWwindow* get() const;
+    inline GLFWwindow* ptr() const;
     
 
     /**
@@ -248,7 +248,7 @@ inline void clear(uint8_t R = 50, uint8_t G = 75, uint8_t B = 75, uint8_t A = 25
 /*                     Window Inline Implementation                    */
 /* ------------------------------------------------------------------- */
 
-inline GLFWwindow* Window::get() const
+inline GLFWwindow* Window::ptr() const
 {
     return _window;
 }
