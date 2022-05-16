@@ -180,11 +180,13 @@ private:
     /* Process keyboar event */
     void processKeyboardEvent();
 
+public:
+    uint16_t    width;     //!< The width of the window
+    uint16_t    height;    //!< The height of the window
+    std::string name;      //!< The name of the window
+
 private:
-    GLFWwindow* _window;        //!< The object of GLFWwindow
-    uint16_t    _win_width;     //!< The width of the window
-    uint16_t    _win_height;    //!< The height of the window
-    std::string _win_name;      //!< The name of the window
+    GLFWwindow* _window;   //!< The object of GLFWwindow
 
     struct{
         uint8_t R;

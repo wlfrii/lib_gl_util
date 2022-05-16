@@ -25,9 +25,9 @@ GL_UTIL_BEGIN
 
 
 Window::Window(uint16_t width, uint16_t height, uint8_t ver_major, uint8_t ver_minor)
-    : _win_width(width)
-    , _win_height(height)
-    , _win_name("Displayer")
+    : width(width)
+    , height(height)
+    , name("Displayer")
     , _is_depth_test_on(false)
 {
     /** Initialize GLFW **/
@@ -115,7 +115,7 @@ bool Window::setToFullScreen(uint8_t monitor_id)
 // --- PRIVATE ---
 bool Window::createGLFWwindow()
 {
-    _window = glfwCreateWindow(_win_width, _win_height, _win_name.c_str(), nullptr, nullptr);
+    _window = glfwCreateWindow(width, height, name.c_str(), nullptr, nullptr);
     if(_window == nullptr){
         GL_UTIL_LOG("Failed to creat GLFW window.\n");
         glfwTerminate();

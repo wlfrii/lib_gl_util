@@ -65,7 +65,7 @@ public:
      * @param z_buf  The depth value from depth buffer
      * @return The depth value w.r.t camera frame
      */
-    inline float cvt2RealDepth(float z_buf);
+    inline float cvt2RealDepth(float z_buf) const;
 
 
 private:
@@ -89,7 +89,7 @@ private:
 
 
 /* ------------------------------------------------------------------- */
-/*                    Projection inline implementation                   */
+/*                    Projection inline implementation                 */
 /* ------------------------------------------------------------------- */
 
 inline const glm::mat4& Projection::get() const
@@ -98,7 +98,7 @@ inline const glm::mat4& Projection::get() const
 }
 
 
-inline float Projection::cvt2RealDepth(float z_buf)
+inline float Projection::cvt2RealDepth(float z_buf) const
 {
     return _B / (_A + 2*z_buf - 1);
 }
