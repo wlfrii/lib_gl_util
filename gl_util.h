@@ -47,7 +47,12 @@ inline void print(const char* name, const glm::mat4& mat){
 
 inline void print(const char* name, const glm::vec3& vec)
 {
-    printf("%s, [%f,%f,%f] ", name, vec.x, vec.y, vec.z);
+    printf("%s: [%f,%f,%f]\n", name, vec.x, vec.y, vec.z);
+};
+
+inline void print(const char* name, const glm::vec4& vec)
+{
+    printf("%s: [%f,%f,%f,%f]\n", name, vec.x, vec.y, vec.z, vec.w);
 };
 
 GL_UTIL_END
