@@ -55,7 +55,7 @@ public:
      * 
      * @return The 4x4 projection matrix.
      */
-    inline const glm::mat4& get() const;
+    inline const glm::mat4& mat4() const;
 
 
     /**
