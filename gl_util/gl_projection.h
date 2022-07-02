@@ -55,7 +55,7 @@ public:
      * 
      * @return The 4x4 projection matrix.
      */
-    inline const glm::mat4& mat4() const;
+    const glm::mat4& mat4() const;
 
 
     /**
@@ -65,7 +65,7 @@ public:
      * @param z_buf  The depth value from depth buffer
      * @return The depth value w.r.t camera frame
      */
-    inline float cvt2RealDepth(float z_buf) const;
+    float cvt2RealDepth(float z_buf) const;
 
 
 private:
@@ -86,22 +86,6 @@ private:
     
     glm::mat4 _projection; //!< The projection matrix
 };
-
-
-/* ------------------------------------------------------------------- */
-/*                    Projection inline implementation                 */
-/* ------------------------------------------------------------------- */
-
-inline const glm::mat4& Projection::get() const
-{
-    return _projection;
-}
-
-
-inline float Projection::cvt2RealDepth(float z_buf) const
-{
-    return _B / (_A + 2*z_buf - 1);
-}
 
 GL_UTIL_END
 #endif // GL_UTIL_PROJECTION_H_LF

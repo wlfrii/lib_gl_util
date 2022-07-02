@@ -64,13 +64,13 @@ public:
     /**
      * @brief Activate current shader program object before rendering
      */
-    inline void use();
+    void use();
 
 
     /**
      * @brief Delete current shader program object 
      */
-    inline void release();
+    void release();
 
 
     /**
@@ -79,7 +79,7 @@ public:
      * @param name  The name of 'bool' object in GLSL
      * @param value  The value to be set
      */
-    inline void setBool(const std::string &name, bool value) const;
+    void setBool(const std::string &name, bool value) const;
    
 
     /**
@@ -88,7 +88,7 @@ public:
      * @param name  The name of 'int' object in GLSL
      * @param value  The value to be set
      */
-    inline void setInt(const std::string &name, int value) const;
+    void setInt(const std::string &name, int value) const;
     
 
     /**
@@ -97,7 +97,7 @@ public:
      * @param name  The name of 'float' object in GLSL
      * @param value  The value to be set
      */
-    inline void setFloat(const std::string &name, float value) const;
+    void setFloat(const std::string &name, float value) const;
 
 
     /**
@@ -109,7 +109,7 @@ public:
      * @param y  The value to be set
      * @param z  The value to be set
      */
-    inline void setFloat3(const std::string &name, float x, float y, float z) const;
+    void setFloat3(const std::string &name, float x, float y, float z) const;
 
 
     /**
@@ -122,7 +122,7 @@ public:
      * @param z  The value to be set
      * @param w  The value to be set
      */
-    inline void setFloat4(const std::string &name, float x, float y, float z, float w) const;
+    void setFloat4(const std::string &name, float x, float y, float z, float w) const;
 
 
     /**
@@ -132,14 +132,14 @@ public:
      * @param name  The name of 'vec3f' object in GLSL
      * @param value  The value to be set
      */
-    inline void setVec3f(const std::string &name, const glm::vec3 &vec) const;
+    void setVec3f(const std::string &name, const glm::vec3 &vec) const;
 
 
     /**
      * @brief Override: Set the 3 float object to Shader (GLSL)
      * .See also setFloat3(), setVec3()
      */
-    inline void setVec3f(const std::string &name, float x, float y, float z) const;
+    void setVec3f(const std::string &name, float x, float y, float z) const;
 
 
     /**
@@ -149,14 +149,14 @@ public:
      * @param name  The name of 'vec4f' object in GLSL
      * @param value  The value to be set
      */
-    inline void setVec4f(const std::string &name, const glm::vec4 &vec) const;
+    void setVec4f(const std::string &name, const glm::vec4 &vec) const;
 
 
     /**
      * @brief Override: Set the 4 float object to Shader (GLSL)
      * .See also setFloat4(), setVec4()
      */
-    inline void setVec4f(const std::string &name, float x, float y, float z, float w) const;
+    void setVec4f(const std::string &name, float x, float y, float z, float w) const;
 
 
     /**
@@ -167,7 +167,7 @@ public:
      * @param name  The name of 'mat4f' object in GLSL
      * @param value  The value to be set
      */
-    inline void setMat4f(const std::string &name, const glm::mat4 &mat) const;
+    void setMat4f(const std::string &name, const glm::mat4 &mat) const;
 
 
 private:
@@ -178,7 +178,7 @@ private:
      *  - true, succeed to read shader files
      *  - false, otherwise
      */
-    inline bool isShaderValid() const;
+    bool isShaderValid() const;
 
 
     /**
@@ -228,107 +228,6 @@ inline void checkShaderCompileErrors(unsigned int shader, std::string type)
         }
     }
 }
-
-
-/* ------------------------------------------------------------------- */
-/*                      Shader inline implementation                   */
-/* ------------------------------------------------------------------- */
-
-inline void Shader::use() 
-{ 
-    if(!isShaderValid()) return;
-    glUseProgram(_ID); 
-}
-
-
-inline void Shader::release()
-{
-    glDeleteProgram(_ID);
-    _has_created = false;
-}
-
-
-inline void Shader::setBool(const std::string &name, bool value) const
-{     
-    if(!isShaderValid()) return;
-    glUniform1i(glGetUniformLocation(_ID, name.c_str()), (int)value); 
-}
-
-
-inline void Shader::setInt(const std::string &name, int value) const
-{ 
-    if(!isShaderValid()) return;
-    glUniform1i(glGetUniformLocation(_ID, name.c_str()), value); 
-}
-
-
-inline void Shader::setFloat(const std::string &name, float value) const
-{ 
-    if(!isShaderValid()) return;
-    glUniform1f(glGetUniformLocation(_ID, name.c_str()), value); 
-}
-
-
-inline void Shader::setFloat3(const std::string &name, float x, float y, float z) const
-{
-    if(!isShaderValid()) return;
-    glUniform3f(glGetUniformLocation(_ID, name.c_str()), x, y, z); 
-}
-
-
-inline void Shader::setFloat4(const std::string &name, float x, float y, float z, float w) const
-{
-    if(!isShaderValid()) return;
-    glUniform4f(glGetUniformLocation(_ID, name.c_str()), x, y, z, w); 
-}
-
-
-inline void Shader::setVec3f(const std::string &name, const glm::vec3 &vec) const
-{
-    if(!isShaderValid()) return;
-    glUniform3fv(glGetUniformLocation(_ID, name.c_str()), 1, glm::value_ptr(vec));
-}
-
-
-inline void Shader::setVec3f(const std::string &name, float x, float y, float z) const
-{
-    if(!isShaderValid()) return;
-
-    glm::vec3 vec(x,y,z);
-    glUniform3fv(glGetUniformLocation(_ID, name.c_str()), 1, glm::value_ptr(vec));
-}
-
-inline void Shader::setVec4f(const std::string &name, const glm::vec4 &vec) const
-{
-    if(!isShaderValid()) return;
-    glUniform4fv(glGetUniformLocation(_ID, name.c_str()), 1, glm::value_ptr(vec));
-}
-
-
-inline void Shader::setVec4f(const std::string &name, float x, float y, float z, float w) const
-{
-    if(!isShaderValid()) return;
-
-    glm::vec4 vec(x,y,z,w);
-    glUniform4fv(glGetUniformLocation(_ID, name.c_str()), 1, glm::value_ptr(vec));
-}
-
-
-inline void Shader::setMat4f(const std::string &name, const glm::mat4 &mat) const
-{
-    if(!isShaderValid()) return;
-    glUniformMatrix4fv(glGetUniformLocation(_ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
-}
-
-
-inline bool Shader::isShaderValid() const
-{
-    if(_has_created) return true;
-    
-    GL_UTIL_LOG("ERROR: Shader object is not valid!\n");
-    return false;
-}
-
 
 GL_UTIL_END
 #endif // GL_UTIL_SHADER_H_LF

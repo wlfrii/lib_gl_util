@@ -70,7 +70,7 @@ public:
      * 
      * @return The managed GLFWwindow object
      */
-    inline GLFWwindow* ptr() const;
+    GLFWwindow* ptr() const;
     
 
     /**
@@ -83,13 +83,13 @@ public:
     /**
      * @brief Hidden current window 
      */
-    inline void hidden();
+    void hidden();
 
 
     /**
      * @brief  Clear the window color and buffer
      */
-    inline void clear();
+    void clear();
 
 
     /**
@@ -97,7 +97,7 @@ public:
      * . Note, OpenGL adopts double-buffers to store the rendered image to avoid
      * the display flickering that may occur in single buffer mode.
      */
-    inline void refresh();
+    void refresh();
 
 
     /**
@@ -106,13 +106,13 @@ public:
      *  - true, if the window should be closed
      *  - false. otherwise
      */
-    inline bool shouldClose();
+    bool shouldClose();
 
 
     /**
      * @brief Terminate GLFW library
      */
-    inline void release();
+    void release();
 
 
     /**
@@ -130,14 +130,14 @@ public:
      *  - GL_NOTEQUAL
      *  - GL_GEQUAL
      */
-    inline void enableDepthTest(size_t depth_cmp = GL_LESS);
+    void enableDepthTest(size_t depth_cmp = GL_LESS);
 
 
     /**
      * @brief Disable depth test
      * . See also enableDepth();
      */
-    inline void disableDepthTest();
+    void disableDepthTest();
 
 
     /**
@@ -241,66 +241,6 @@ inline void clear(uint8_t R = 50, uint8_t G = 75, uint8_t B = 75, uint8_t A = 25
     if(is_depth_on){
         glClear(GL_DEPTH_BUFFER_BIT);
     }
-}
-
-
-/* ------------------------------------------------------------------- */
-/*                     Window Inline Implementation                    */
-/* ------------------------------------------------------------------- */
-
-inline GLFWwindow* Window::ptr() const
-{
-    return _window;
-}
-
-
-inline void Window::hidden()
-{
-    glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
-}
-
-
-inline void Window::clear()
-{
-    gl_util::clear(_color.R, _color.G, _color.B, _color.A, _is_depth_test_on);
-}
-
-
-inline void Window::refresh()
-{
-    // Swap the double buffer
-    glfwSwapBuffers(_window);
-
-    // Check the keys pressed/released, mouse moved etc. events
-    glfwPollEvents();
-}
-
-
-inline bool Window::shouldClose()
-{
-    return glfwWindowShouldClose(_window);
-}
-
-
-inline void Window::release()
-{
-    // Terminate GLFW library
-    glfwTerminate();
-}
-
-
-inline void Window::enableDepthTest(size_t depth_cmp)
-{
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(depth_cmp);
-    _is_depth_test_on = true;
-}
-
-
-inline void Window::disableDepthTest()
-{
-    glDisable(GL_DEPTH_TEST);
-    _is_depth_test_on = false;
 }
 
 GL_UTIL_END

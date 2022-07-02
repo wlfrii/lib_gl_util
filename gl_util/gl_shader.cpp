@@ -79,4 +79,100 @@ bool Shader::load(const std::string &vs_path, const std::string &fs_path)
     return true;
 }
 
+
+void Shader::use() 
+{ 
+    if(!isShaderValid()) return;
+    glUseProgram(_ID); 
+}
+
+
+void Shader::release()
+{
+    glDeleteProgram(_ID);
+    _has_created = false;
+}
+
+
+void Shader::setBool(const std::string &name, bool value) const
+{     
+    if(!isShaderValid()) return;
+    glUniform1i(glGetUniformLocation(_ID, name.c_str()), (int)value); 
+}
+
+
+void Shader::setInt(const std::string &name, int value) const
+{ 
+    if(!isShaderValid()) return;
+    glUniform1i(glGetUniformLocation(_ID, name.c_str()), value); 
+}
+
+
+void Shader::setFloat(const std::string &name, float value) const
+{ 
+    if(!isShaderValid()) return;
+    glUniform1f(glGetUniformLocation(_ID, name.c_str()), value); 
+}
+
+
+void Shader::setFloat3(const std::string &name, float x, float y, float z) const
+{
+    if(!isShaderValid()) return;
+    glUniform3f(glGetUniformLocation(_ID, name.c_str()), x, y, z); 
+}
+
+
+void Shader::setFloat4(const std::string &name, float x, float y, float z, float w) const
+{
+    if(!isShaderValid()) return;
+    glUniform4f(glGetUniformLocation(_ID, name.c_str()), x, y, z, w); 
+}
+
+
+void Shader::setVec3f(const std::string &name, const glm::vec3 &vec) const
+{
+    if(!isShaderValid()) return;
+    glUniform3fv(glGetUniformLocation(_ID, name.c_str()), 1, glm::value_ptr(vec));
+}
+
+
+void Shader::setVec3f(const std::string &name, float x, float y, float z) const
+{
+    if(!isShaderValid()) return;
+
+    glm::vec3 vec(x,y,z);
+    glUniform3fv(glGetUniformLocation(_ID, name.c_str()), 1, glm::value_ptr(vec));
+}
+
+void Shader::setVec4f(const std::string &name, const glm::vec4 &vec) const
+{
+    if(!isShaderValid()) return;
+    glUniform4fv(glGetUniformLocation(_ID, name.c_str()), 1, glm::value_ptr(vec));
+}
+
+
+void Shader::setVec4f(const std::string &name, float x, float y, float z, float w) const
+{
+    if(!isShaderValid()) return;
+
+    glm::vec4 vec(x,y,z,w);
+    glUniform4fv(glGetUniformLocation(_ID, name.c_str()), 1, glm::value_ptr(vec));
+}
+
+
+void Shader::setMat4f(const std::string &name, const glm::mat4 &mat) const
+{
+    if(!isShaderValid()) return;
+    glUniformMatrix4fv(glGetUniformLocation(_ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
+}
+
+
+bool Shader::isShaderValid() const
+{
+    if(_has_created) return true;
+    
+    GL_UTIL_LOG("ERROR: Shader object is not valid!\n");
+    return false;
+}
+
 GL_UTIL_END

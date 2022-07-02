@@ -78,4 +78,18 @@ void Texture2D::bind()
     glBindTexture(GL_TEXTURE_2D, _texture);
 }
 
+
+unsigned char Texture2D::ID() const
+{
+    return _texture_id;
+}
+
+
+void Texture2D::release()
+{
+    _has_texture = false;
+    glDeleteTextures(1, &_texture);
+}
+
+
 GL_UTIL_END

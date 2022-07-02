@@ -83,13 +83,13 @@ public:
      * 
      * @return Current texture index 
      */
-    inline unsigned char ID() const;
+    unsigned char ID() const;
 
 
     /**
      * @brief Delete current texture 
      */
-    inline void release();
+    void release();
 
 private:
     unsigned char   _texture_id;  //!< The index of current texture
@@ -97,22 +97,6 @@ private:
     bool            _has_texture; //!< The flag whether texture has been load
 };
 
-
-/* ------------------------------------------------------------------- */
-/*                   Texture2D inline Implementation                   */
-/* ------------------------------------------------------------------- */
-
-inline unsigned char Texture2D::ID() const
-{
-    return _texture_id;
-}
-
-
-inline void Texture2D::release()
-{
-    _has_texture = false;
-    glDeleteTextures(1, &_texture);
-}
 
 GL_UTIL_END
 #endif // GL_UTIL_TEXTURE_H_LF

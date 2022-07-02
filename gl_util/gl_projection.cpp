@@ -31,4 +31,15 @@ void Projection::calcProjection()
 }
 
 
+const glm::mat4& Projection::mat4() const
+{
+    return _projection;
+}
+
+
+float Projection::cvt2RealDepth(float z_buf) const
+{
+    return _B / (_A + 2*z_buf - 1);
+}
+
 GL_UTIL_END

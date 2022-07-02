@@ -24,13 +24,12 @@
 #ifndef GL_UTILITY_H_LF
 #define GL_UTILITY_H_LF
 
-#include "gl_window.h"
-#include "gl_shader.h"
-#include "gl_vavbebo.h"
-#include "gl_texture.h"
-#include "gl_camera.h"
-
-#include "gl_projection.h"
+#include "gl_util/gl_window.h"
+#include "gl_util/gl_shader.h"
+#include "gl_util/gl_vavbebo.h"
+#include "gl_util/gl_texture.h"
+#include "gl_util/gl_camera.h"
+#include "gl_util/gl_projection.h"
 
 /* The other uitilities */
 GL_UTIL_BEGIN

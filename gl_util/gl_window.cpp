@@ -65,6 +65,12 @@ Window::~Window()
 }
 
 
+GLFWwindow* Window::ptr() const
+{
+    return _window;
+}
+
+
 void Window::activate()
 {
     // Activate current window
@@ -80,6 +86,56 @@ void Window::activate()
     else{
         processKeyboardEvent();
     }
+}
+
+
+void Window::hidden()
+{
+    glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
+}
+
+
+void Window::clear()
+{
+    gl_util::clear(_color.R, _color.G, _color.B, _color.A, _is_depth_test_on);
+}
+
+
+void Window::refresh()
+{
+    // Swap the double buffer
+    glfwSwapBuffers(_window);
+
+    // Check the keys pressed/released, mouse moved etc. events
+    glfwPollEvents();
+}
+
+
+bool Window::shouldClose()
+{
+    return glfwWindowShouldClose(_window);
+}
+
+
+void Window::release()
+{
+    // Terminate GLFW library
+    glfwTerminate();
+}
+
+
+void Window::enableDepthTest(size_t depth_cmp)
+{
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(depth_cmp);
+    _is_depth_test_on = true;
+}
+
+
+void Window::disableDepthTest()
+{
+    glDisable(GL_DEPTH_TEST);
+    _is_depth_test_on = false;
 }
 
 
