@@ -130,7 +130,7 @@ public:
      *  - GL_NOTEQUAL
      *  - GL_GEQUAL
      */
-    void enableDepthTest(size_t depth_cmp = GL_LESS);
+    void enableDepthTest(size_t depth_cmp = GL_LEQUAL);
 
 
     /**
