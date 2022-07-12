@@ -61,7 +61,7 @@ public:
      * @param ver_minor The minor version of glfw
      * @return  Window object
      */
-    Window(uint16_t width, uint16_t height, uint8_t ver_major = 3, uint8_t ver_minor = 3);
+    Window(uint16_t width, uint16_t height, const std::string &name = "Displayer", uint8_t ver_major = 3, uint8_t ver_minor = 3);
     ~Window();
 
 
@@ -181,9 +181,9 @@ private:
     void processKeyboardEvent();
 
 public:
-    uint16_t    width;     //!< The width of the window
-    uint16_t    height;    //!< The height of the window
-    std::string name;      //!< The name of the window
+    const uint16_t    width;     //!< The width of the window
+    const uint16_t    height;    //!< The height of the window
+    const std::string name;      //!< The name of the window
 
 private:
     GLFWwindow* _window;   //!< The object of GLFWwindow

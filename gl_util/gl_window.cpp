@@ -24,10 +24,10 @@ inline void frameBufferSizeCallback(GLFWwindow* window, int width, int height)
 GL_UTIL_BEGIN
 
 
-Window::Window(uint16_t width, uint16_t height, uint8_t ver_major, uint8_t ver_minor)
+Window::Window(uint16_t width, uint16_t height, const std::string &name, uint8_t ver_major, uint8_t ver_minor)
     : width(width)
     , height(height)
-    , name("Displayer")
+    , name(name)
     , _is_depth_test_on(false)
 {
     /** Initialize GLFW **/
