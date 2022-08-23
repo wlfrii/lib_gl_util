@@ -34,7 +34,8 @@
 /* The other uitilities */
 GL_UTIL_BEGIN
 
-inline void print(const char* name, const glm::mat4& mat){
+inline void print(const char* name, const glm::mat4& mat)
+{
     printf("%s:\n", name);
     for(int i = 0; i < 4; i++){
         for(int j = 0; j < 4; j++){
@@ -44,15 +45,29 @@ inline void print(const char* name, const glm::mat4& mat){
     }
 }
 
+
 inline void print(const char* name, const glm::vec3& vec)
 {
     printf("%s: [%f,%f,%f]\n", name, vec.x, vec.y, vec.z);
 };
 
+
 inline void print(const char* name, const glm::vec4& vec)
 {
     printf("%s: [%f,%f,%f,%f]\n", name, vec.x, vec.y, vec.z, vec.w);
 };
+
+
+inline glm::mat4 transpose(const glm::mat4& mat) 
+{
+    glm::mat4 ret;
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            ret[j][i] = mat[i][j];
+        }
+    }
+    return ret;
+}
 
 GL_UTIL_END
 
