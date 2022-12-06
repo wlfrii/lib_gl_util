@@ -39,7 +39,7 @@ inline void print(const char* name, const glm::mat4& mat)
     printf("%s:\n", name);
     for(int i = 0; i < 4; i++){
         for(int j = 0; j < 4; j++){
-            printf("%f,", mat[i][j]);
+            printf("%.15f,", mat[i][j]);
         }
         printf("\n");
     }
@@ -48,13 +48,13 @@ inline void print(const char* name, const glm::mat4& mat)
 
 inline void print(const char* name, const glm::vec3& vec)
 {
-    printf("%s: [%f,%f,%f]\n", name, vec.x, vec.y, vec.z);
+    printf("%s: [%.15f,%.15f,%.15f]\n", name, vec.x, vec.y, vec.z);
 };
 
 
 inline void print(const char* name, const glm::vec4& vec)
 {
-    printf("%s: [%f,%f,%f,%f]\n", name, vec.x, vec.y, vec.z, vec.w);
+    printf("%s: [%.15f,%.15f,%.15f,%.15f]\n", name, vec.x, vec.y, vec.z, vec.w);
 };
 
 
