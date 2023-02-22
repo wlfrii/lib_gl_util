@@ -12,9 +12,9 @@
  * 
  * @date		2021/10/09
  * 
- * @license		
+ * @license		MIT
  * 
- * Copyright (C) 2021 Longfei Wang.
+ * Copyright (C) 2021-Now Longfei Wang.
  * 
  * --------------------------------------------------------------------
  * Change History:                        
