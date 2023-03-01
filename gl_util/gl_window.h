@@ -57,11 +57,15 @@ public:
      * 
      * @param width  The width of the window
      * @param height  The height of the window
+     * @param name  Name of the window
+     * @param is_window_visible  Flag for creating visible/invisible window
      * @param ver_major The major version of glfw
      * @param ver_minor The minor version of glfw
      * @return  Window object
      */
-    Window(uint16_t width, uint16_t height, const std::string &name = "Displayer", uint8_t ver_major = 3, uint8_t ver_minor = 3);
+    Window(uint16_t width, uint16_t height, const std::string &name,
+           bool is_window_visible = true,
+           uint8_t ver_major = 3, uint8_t ver_minor = 3);
     ~Window();
 
 
@@ -176,7 +180,7 @@ public:
 
 private:
     /* Create GLFW window */ 
-    bool createGLFWwindow();
+    bool createGLFWwindow(bool is_window_visible);
     /* Process keyboar event */
     void processKeyboardEvent();
 

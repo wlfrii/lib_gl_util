@@ -10,7 +10,7 @@ namespace {
  * @param width 
  * @param height 
  */
-inline void frameBufferSizeCallback(GLFWwindow* window, int width, int height)
+inline void frameBufferSizeCallback(GLFWwindow*, int width, int height)
 {
     /* make sure the viewport matches the new window dimensions; note that
      width and height will be significantly larger than specified on retina 
@@ -24,7 +24,8 @@ inline void frameBufferSizeCallback(GLFWwindow* window, int width, int height)
 GL_UTIL_BEGIN
 
 
-Window::Window(uint16_t width, uint16_t height, const std::string &name, uint8_t ver_major, uint8_t ver_minor)
+Window::Window(uint16_t width, uint16_t height, const std::string &name,
+               bool is_window_visible, uint8_t ver_major, uint8_t ver_minor)
     : width(width)
     , height(height)
     , name(name)
@@ -43,7 +44,7 @@ Window::Window(uint16_t width, uint16_t height, const std::string &name, uint8_t
 #endif
 
     /** Create GLFWwindo object **/
-    if(!createGLFWwindow()){
+    if(!createGLFWwindow(is_window_visible)){
         exit(-1);
     }
 
@@ -76,9 +77,6 @@ void Window::activate()
     // Activate current window
     glfwMakeContextCurrent(_window);
 
-    // Make current window visiable
-    glfwWindowHint(GLFW_VISIBLE, GL_TRUE);
-
     // Monitoring kewboard event
     if(_callback_kbe){
         _callback_kbe(this->_window); 
@@ -91,12 +89,9 @@ void Window::activate()
 
 void Window::hidden()
 {
-    glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
-    // glUseProgram(0);
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    // glBindBuffer(GL_ARRAY_BUFFER, 0);
-    // glBindVertexArray(0);
-    // glfwMakeContextCurrent(NULL);
+    glfwDestroyWindow(_window);
+    _window = nullptr;
+    createGLFWwindow(false);
 }
 
 
@@ -174,8 +169,11 @@ bool Window::setToFullScreen(uint8_t monitor_id)
 
 
 // --- PRIVATE ---
-bool Window::createGLFWwindow()
+bool Window::createGLFWwindow(bool is_window_visible)
 {
+    // This flag should be set before creating a glfwWindow.
+    glfwWindowHint(GLFW_VISIBLE, is_window_visible);
+
     _window = glfwCreateWindow(width, height, name.c_str(), nullptr, nullptr);
     if(_window == nullptr){
         GL_UTIL_LOG("Failed to creat GLFW window.\n");
@@ -190,9 +188,6 @@ bool Window::createGLFWwindow()
     // buffer to viewport.
     glfwSetFramebufferSizeCallback(_window, ::frameBufferSizeCallback);
     
-    // Hidden current window since there is nothing to show now.
-    glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
-
     return true;
 }
 
