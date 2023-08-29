@@ -85,6 +85,13 @@ public:
 
 
     /**
+     * @brief Deactivate current window
+     * . This is useful when there are more than one GL Window exist.
+     */
+    void deactivate();
+
+
+    /**
      * @brief Hidden current window 
      */
     void hidden();

@@ -1,4 +1,4 @@
-#include "gl_util.h"
+#include "gl_texture.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
