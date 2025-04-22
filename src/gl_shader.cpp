@@ -81,8 +81,10 @@ void Shader::use() {
 }
 
 void Shader::release() {
-    glDeleteProgram(_id);
-    _has_created = false;
+    if(_has_created) {
+        glDeleteProgram(_id);
+        _has_created = false;
+    }
 }
 
 void Shader::setBool(const std::string &name, bool value) const {     
