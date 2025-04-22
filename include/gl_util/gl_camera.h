@@ -45,8 +45,7 @@ const float ZOOM        = 45.0f;
  * corresponding Euler Angles, Vectors and Matrices for using in OpenGL.
  * Note, the z-axis of the GL camera is oriented from screen to you.
  */
-class Camera
-{
+class Camera {
 public:
     /** 
      * @brief Defines several possible options for camera movement. Used as 

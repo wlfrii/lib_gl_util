@@ -3,19 +3,15 @@
 GL_UTIL_BEGIN
 
 VAVBEBO::VAVBEBO() 
-    : _is_bind(false) 
-{
+    : _is_bind(false) {
 }
 
-
-VAVBEBO::~VAVBEBO() 
-{ 
+VAVBEBO::~VAVBEBO() { 
     release(); 
 }
 
-
-void VAVBEBO::bind(float* vertices, size_t vertices_size, unsigned int* indices, size_t indices_size, size_t gl_draw_mode)
-{
+void VAVBEBO::bind(float* vertices, size_t vertices_size, unsigned int* indices, 
+                   size_t indices_size, size_t gl_draw_mode) {
     glGenVertexArrays(1, &_vao);
     glBindVertexArray(_vao);
     
@@ -35,9 +31,7 @@ void VAVBEBO::bind(float* vertices, size_t vertices_size, unsigned int* indices,
     _is_bind = true;
 }
 
-
-void VAVBEBO::bindVertexArray()
-{
+void VAVBEBO::bindVertexArray() {
     if(!_is_bind){
         GL_UTIL_LOG("ERROR: No valid vertices are binded to VAVBEBO object!\n");
         return;
@@ -45,15 +39,11 @@ void VAVBEBO::bindVertexArray()
     glBindVertexArray(_vao);
 }
 
-
-void VAVBEBO::unBindVertexArray()
-{
+void VAVBEBO::unBindVertexArray() {
     glBindVertexArray(0);
 }
 
-
-void VAVBEBO::release()
-{
+void VAVBEBO::release() {
     if(_is_bind){
         glDeleteVertexArrays(1, &_vao);
         glDeleteBuffers(1, &_vbo);

@@ -6,18 +6,10 @@ GL_UTIL_BEGIN
 
 Texture2D::Texture2D(unsigned char texture_id)
     : _texture_id(texture_id)
-    , _has_texture(false)
-{
+    , _has_texture(false) {
 }
 
-
-Texture2D::~Texture2D()
-{
-}
-
-
-bool Texture2D::loadImage(const std::string& texture_path, GLint st_warp, GLint min_filter, GLint mag_filter)
-{
+bool Texture2D::loadImage(const std::string& texture_path, GLint st_warp, GLint min_filter, GLint mag_filter) {
     if(_has_texture){
         GL_UTIL_LOG("WARNING: Current shader program object will be replaced!\n");
         release();
@@ -57,11 +49,8 @@ bool Texture2D::loadImage(const std::string& texture_path, GLint st_warp, GLint 
     return true;
 }
 
-
-void Texture2D::bind()
-{
-    switch (_texture_id)
-    {
+void Texture2D::bind() {
+    switch (_texture_id) {
     case 0:  glActiveTexture(GL_TEXTURE0);  break;
     case 1:  glActiveTexture(GL_TEXTURE1);  break;
     case 2:  glActiveTexture(GL_TEXTURE2);  break;
@@ -78,18 +67,13 @@ void Texture2D::bind()
     glBindTexture(GL_TEXTURE_2D, _texture);
 }
 
-
-unsigned char Texture2D::ID() const
-{
+unsigned char Texture2D::ID() const {
     return _texture_id;
 }
 
-
-void Texture2D::release()
-{
+void Texture2D::release() {
     _has_texture = false;
     glDeleteTextures(1, &_texture);
 }
-
 
 GL_UTIL_END

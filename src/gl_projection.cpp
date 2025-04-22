@@ -9,14 +9,11 @@ Projection::Projection(float fxy, float cx, float cy, float w, float h, float z_
     , _cx(cx), _cy(cy)
     , _w(w), _h(h)
     , _A(0), _B(0)
-    , _projection(glm::mat4(.0f))
-{
+    , _projection(glm::mat4(.0f)) {
     calcProjection();
 }
 
-
-void Projection::calcProjection()
-{
+void Projection::calcProjection() {
     _projection[0][0] = 2 * _fxy / _w;
     _projection[0][2] = 1 - 2 * _cx / _w;
     _projection[1][1] = 2 * _fxy / _h;
@@ -30,15 +27,11 @@ void Projection::calcProjection()
     _projection[2][3] = -1;
 }
 
-
-const glm::mat4& Projection::mat4() const
-{
+const glm::mat4& Projection::mat4() const {
     return _projection;
 }
 
-
-float Projection::cvt2RealDepth(float z_buf) const
-{
+float Projection::cvt2RealDepth(float z_buf) const {
     return _B / (_A + 2*z_buf - 1);
 }
 

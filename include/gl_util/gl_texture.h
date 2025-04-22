@@ -1,4 +1,4 @@
-/** -------------------------------------------------------------------
+/** -------------------------------------------------------------------------------------
  *																		
  *   				        OpenGL Utilities 					
  *																		
@@ -16,14 +16,14 @@
  * 
  * Copyright (C) 2021-Now Longfei Wang.
  * 
- * --------------------------------------------------------------------
+ * --------------------------------------------------------------------------------------
  * Change History:                        
  * 
  * 2022.4.29 Refactor the codes.
- * * --------------------------------------------------------------------
+ * * ------------------------------------------------------------------------------------
  * References:
  * https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/
- * -------------------------------------------------------------------*/
+ * ------------------------------------------------------------------------------------*/
 #ifndef GL_UTIL_TEXTURE_H_LF
 #define GL_UTIL_TEXTURE_H_LF
 #include <glad/glad.h>
@@ -33,11 +33,9 @@
 GL_UTIL_BEGIN
 
 /**
- * @brief A manager for GL 2D texture
- * 
+ * @brief A manager for GL 2D texture.
  */
-class Texture2D
-{
+class Texture2D {
 public:
     /**
      * @brief Construct a new Texture2D object
@@ -47,8 +45,6 @@ public:
      * OpenGL as least support 16 texture units(GL_TEXTURE0-GL_TEXTURE15). 
      */
     Texture2D(unsigned char texture_id = 0);
-    ~Texture2D();
-
 
     /**
      * @brief Load an image as the texture
@@ -69,14 +65,14 @@ public:
      *  - GL_NEAREST_MIPMAP_LINEAR
      *  - GL_LINEAR_MIPMAP_LINEAR
      */
-    bool loadImage(const std::string& im_path, GLint st_warp = GL_LINEAR, GLint min_filter = GL_LINEAR_MIPMAP_LINEAR, GLint mag_filter = GL_LINEAR);
-
+    bool loadImage(const std::string& im_path, GLint st_warp = GL_LINEAR, 
+                   GLint min_filter = GL_LINEAR_MIPMAP_LINEAR, 
+                   GLint mag_filter = GL_LINEAR);
 
     /**
      * @brief Bind the texture refers to the texture index 
      */
     void bind();
-
 
     /**
      * @brief Get the texture index
@@ -84,7 +80,6 @@ public:
      * @return Current texture index 
      */
     unsigned char ID() const;
-
 
     /**
      * @brief Delete current texture 
@@ -96,7 +91,6 @@ private:
     GLuint          _texture;     //!< The texture object created by GL
     bool            _has_texture; //!< The flag whether texture has been load
 };
-
 
 GL_UTIL_END
 #endif // GL_UTIL_TEXTURE_H_LF

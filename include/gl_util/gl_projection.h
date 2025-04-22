@@ -1,4 +1,4 @@
-/** -------------------------------------------------------------------
+/** -------------------------------------------------------------------------------------
  *																		
  *   				        OpenGL Utilities 					
  *																		
@@ -16,10 +16,10 @@
  * 
  * Copyright (C) 2021-Now Longfei Wang.
  * 
- * --------------------------------------------------------------------
+ * --------------------------------------------------------------------------------------
  * Change History:                        
  * 
- * -------------------------------------------------------------------*/
+ * ------------------------------------------------------------------------------------*/
 #ifndef GL_UTIL_PROJECTION_H_LF
 #define GL_UTIL_PROJECTION_H_LF
 #include <glm/glm.hpp>
@@ -31,8 +31,7 @@ GL_UTIL_BEGIN
  * @brief Construct the projection matrix for OpenGL. 
  * The OpenGL projection matrix is consist of clipping and NDC transform. 
  */
-class Projection
-{
+class Projection {
 public:
     /**
      * @brief Construct a new Projection object
@@ -46,7 +45,8 @@ public:
      * @param z_near  The near plane distance
      * @param z_far  The far plane distance
      */
-    Projection(float fxy, float cx, float cy, float w, float h, float z_near = 0.1, float z_far = 100);
+    Projection(float fxy, float cx, float cy, float w, float h, 
+               float z_near = 0.1, float z_far = 100);
 
 
     /**
@@ -57,16 +57,14 @@ public:
      */
     const glm::mat4& mat4() const;
 
-
     /**
      * @brief  Convert depth buffer read from GL_DEPTH_COMPONENT to real depth 
      * w.r.t camera frame.
      * 
-     * @param z_buf  The depth value from depth buffer
+     * @param[in] z_buf  The depth value from depth buffer
      * @return The depth value w.r.t camera frame
      */
     float cvt2RealDepth(float z_buf) const;
-
 
 private:
     /** Calculate projection matrix **/
