@@ -82,8 +82,9 @@ public:
      *   @retval true  Succeed to load the two files.
      *   @retval false Otherwise.
      * 
-     * @note This function can be called when you want to change the vertex and 
-     * fragment shader files.
+     * @note This function can be called when you want to change the vertex and fragment 
+     * shader files. What should be CAREFULLY NOTICED is, make sure the correct window
+     * is made current.
      */
     bool load(const std::string &vs_path, const std::string &fs_path);
 
