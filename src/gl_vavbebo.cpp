@@ -4,6 +4,7 @@ GL_UTIL_BEGIN
 
 VAVBEBO::VAVBEBO() 
     : _is_bind(false) {
+    checkInitStatus();
 }
 
 VAVBEBO::~VAVBEBO() { 

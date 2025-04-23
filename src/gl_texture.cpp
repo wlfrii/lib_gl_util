@@ -7,6 +7,7 @@ GL_UTIL_BEGIN
 Texture2D::Texture2D(unsigned char texture_id)
     : _texture_id(texture_id)
     , _has_texture(false) {
+    checkInitStatus();
 }
 
 bool Texture2D::loadImage(const std::string& texture_path, GLint st_warp, GLint min_filter, GLint mag_filter) {

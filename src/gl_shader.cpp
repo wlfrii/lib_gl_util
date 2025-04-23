@@ -40,6 +40,7 @@ void checkShaderCompileErrors(unsigned int shader, std::string type) {
 Shader::Shader()
     : _has_created(false)
     , _id(0) {
+    checkInitStatus();
 }
 
 Shader::~Shader() {
