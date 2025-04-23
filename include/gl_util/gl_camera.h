@@ -161,7 +161,7 @@ private:
     }
 
     // Camera attributes
-    glm::vec3 _position;  //!< The position of camera w.r.t {W}
+    glm::vec3 _position;  ///< The position of camera w.r.t {W}
     glm::vec3 _front;
     glm::vec3 _up;
     glm::vec3 _right;

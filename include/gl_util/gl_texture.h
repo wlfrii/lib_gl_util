@@ -87,9 +87,9 @@ public:
     void release();
 
 private:
-    unsigned char   _texture_id;  //!< The index of current texture
-    GLuint          _texture;     //!< The texture object created by GL
-    bool            _has_texture; //!< The flag whether texture has been load
+    unsigned char   _texture_id;  ///< The index of current texture
+    GLuint          _texture;     ///< The texture object created by GL
+    bool            _has_texture; ///< The flag whether texture has been load
 };
 
 GL_UTIL_END

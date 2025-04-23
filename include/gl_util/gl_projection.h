@@ -70,19 +70,19 @@ private:
     /** Calculate projection matrix **/
     void calcProjection();
 
-    float _z_near;  //!< The distance of near plane
-    float _z_far;   //!< The distance of far plane
+    float _z_near;  ///< The distance of near plane
+    float _z_far;   ///< The distance of far plane
 
-    float _fxy;     //!< The focal length of camera
-    float _cx;      //!< The optical aixs's x coordinate
-    float _cy;      //!< The optical aixs's y coordinate
-    float _w;       //!< The pixel width of camera
-    float _h;       //!< The pixel height of camera
+    float _fxy;     ///< The focal length of camera
+    float _cx;      ///< The optical aixs's x coordinate
+    float _cy;      ///< The optical aixs's y coordinate
+    float _w;       ///< The pixel width of camera
+    float _h;       ///< The pixel height of camera
 
-    float _A;       //!< The temporary variable A
-    float _B;       //!< The temporary variable B 
+    float _A;       ///< The temporary variable A
+    float _B;       ///< The temporary variable B 
     
-    glm::mat4 _projection; //!< The projection matrix
+    glm::mat4 _projection; ///< The projection matrix
 };
 
 GL_UTIL_END

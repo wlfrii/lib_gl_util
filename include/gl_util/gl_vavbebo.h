@@ -77,10 +77,10 @@ public:
     void unBindVertexArray();
 
 private:
-    GLuint _vao;        //!< Vertex Array Object
-    GLuint _vbo;        //!< Vertex Buffer Object
-    GLuint _ebo;        //!< Element Buffer Object
-    bool _is_bind;      //!< Flag to whether bind vertices data
+    GLuint _vao;        ///< Vertex Array Object
+    GLuint _vbo;        ///< Vertex Buffer Object
+    GLuint _ebo;        ///< Element Buffer Object
+    bool _is_bind;      ///< Flag to whether bind vertices data
 };
 
 GL_UTIL_END
