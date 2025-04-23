@@ -226,17 +226,5 @@ private:
     bool _has_created; ///< Whether the shader program object is created successfully.
 };
 
-/* ----------------------------------------------------------------------------------- */
-/*                                     Shader utility                                  */
-/* ----------------------------------------------------------------------------------- */
-
-/**
- * @brief Check if there is any error when compile shader.
- * 
- * @param shader  The vertex shader, fragment shader or shader program object.
- * @param type  Specify the shader type, PROGRAM, VERTEX, or FRAGMENT.
- */
-void checkShaderCompileErrors(unsigned int shader, std::string type);
-
 GL_UTIL_END
 #endif // GL_UTIL_SHADER_H_LF

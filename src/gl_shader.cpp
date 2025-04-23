@@ -2,6 +2,41 @@
 
 GL_UTIL_BEGIN
 
+/* ----------------------------------------------------------------------------------- */
+/*                                     Shader utility                                  */
+/* ----------------------------------------------------------------------------------- */
+
+/**
+ * @brief Check if there is any error when compile shader.
+ * 
+ * @param shader  The vertex shader, fragment shader or shader program object.
+ * @param type  Specify the shader type, PROGRAM, VERTEX, or FRAGMENT.
+ */
+void checkShaderCompileErrors(unsigned int shader, std::string type) {
+    int success;
+    char infoLog[512];
+    if (type != "PROGRAM") {
+        // Check whether failed to compile shader
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+        if (!success) {
+            glGetShaderInfoLog(shader, 1024, NULL, infoLog);
+            GL_UTIL_LOG("ERROR: Shader compilation error of type: %s\n\t%s\n", type.c_str(), infoLog);
+        }
+    }
+    else {
+        // Check whether failed to compile shader program
+        glGetProgramiv(shader, GL_LINK_STATUS, &success);
+        if (!success) {
+            glGetProgramInfoLog(shader, 1024, NULL, infoLog);
+            GL_UTIL_LOG("ERROR: Shader program linking error of type: %s\n\t%s\n", type.c_str(), infoLog);
+        }
+    }
+}
+
+/* ----------------------------------------------------------------------------------- */
+/*                                 Shader implementation                               */
+/* ----------------------------------------------------------------------------------- */
+
 Shader::Shader()
     : _has_created(false)
     , _id(0) {
@@ -146,31 +181,6 @@ bool Shader::isShaderValid() const {
     
     GL_UTIL_LOG("ERROR: Shader object is not valid!\n");
     return false;
-}
-
-/* ----------------------------------------------------------------------------------- */
-/*                                     Shader utility                                  */
-/* ----------------------------------------------------------------------------------- */
-
-void checkShaderCompileErrors(unsigned int shader, std::string type) {
-    int success;
-    char infoLog[512];
-    if (type != "PROGRAM") {
-        // Check whether failed to compile shader
-        glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-        if (!success) {
-            glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-            GL_UTIL_LOG("ERROR: Shader compilation error of type: %s\n\t%s\n", type.c_str(), infoLog);
-        }
-    }
-    else {
-        // Check whether failed to compile shader program
-        glGetProgramiv(shader, GL_LINK_STATUS, &success);
-        if (!success) {
-            glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-            GL_UTIL_LOG("ERROR: Shader program linking error of type: %s\n\t%s\n", type.c_str(), infoLog);
-        }
-    }
 }
 
 GL_UTIL_END
