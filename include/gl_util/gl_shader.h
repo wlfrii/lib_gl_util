@@ -48,7 +48,28 @@ public:
     Shader();
 
     /**
+     * @brief Delete copy constructor.
+     * 
+     * @note The Shader class will create GL program to attach the given (loaded) vertex
+     * and fragment codes, copied Shader object will share the same GL program, which 
+     * might produce problems. So delete this constructor.
+     */
+    Shader(const& Shader&) = delete;
+
+    /**
+     * @brief Delete assignment constructor.
+     * 
+     * @note The Shader class will create GL program to attach the given (loaded) vertex
+     * and fragment codes, copied Shader object will share the same GL program, which 
+     * might produce problems. So delete this constructor.
+     */
+    Shader& operator=(const Shader&) = delete;
+
+    /**
      * @brief Destroy the Shader object.
+     * 
+     * @details Calling the destructor will invoke glDeleteProgram to delete the program,
+     * if the program has been created.
      */
     ~Shader();
 
@@ -61,7 +82,7 @@ public:
      *   @retval true  Succeed to load the two files.
      *   @retval false Otherwise.
      * 
-     * @note This function can be called once you want to change the vertex and 
+     * @note This function can be called when you want to change the vertex and 
      * fragment shader files.
      */
     bool load(const std::string &vs_path, const std::string &fs_path);
@@ -70,11 +91,6 @@ public:
      * @brief Activate current shader program object before rendering.
      */
     void use();
-
-    /**
-     * @brief Delete current shader program object.
-     */
-    void release();
 
     /**
      * @brief Set the 'bool' object to Shader (GLSL).

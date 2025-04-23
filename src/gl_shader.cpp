@@ -8,14 +8,14 @@ Shader::Shader()
 }
 
 Shader::~Shader() {
-    release();
+    if(_has_created) {
+        glDeleteProgram(_id);
+    }
 }
-
 
 bool Shader::load(const std::string &vs_path, const std::string &fs_path) {
     if(_has_created){
         GL_UTIL_LOG("WARNING: Current shader program object will be replaced!\n");
-        release();
     }
 
     /** 1. Retrieve the vertex/fragment source code from filePath **/
@@ -42,8 +42,14 @@ bool Shader::load(const std::string &vs_path, const std::string &fs_path) {
     }
     catch (std::ifstream::failure& e)
     {
-        GL_UTIL_LOG("ERROR: Files are not successfully read\n");
-        return _has_created;
+        if(_has_created) {
+            GL_UTIL_LOG("WARNING: Files are not successfully read, "
+                        "keeping use previous vertex and fragment codes.\n");
+        }
+        else {
+            GL_UTIL_LOG("ERROR: Files are not successfully read.\n");
+        }
+        return false;
     }
     const char* vs_code = vertex_code.c_str();
     const char* fs_code = fragment_code.c_str();
@@ -61,7 +67,9 @@ bool Shader::load(const std::string &vs_path, const std::string &fs_path) {
     glCompileShader(fragment_shader);
     checkShaderCompileErrors(fragment_shader, "FRAGMENT");
     // Create shader Program and link the vertex and fragment shader to it
-    _id = glCreateProgram();
+    if(!_has_created) {
+        _id = glCreateProgram();
+    }
     glAttachShader(_id, vertex_shader);
     glAttachShader(_id, fragment_shader);
     glLinkProgram(_id);
@@ -78,13 +86,6 @@ bool Shader::load(const std::string &vs_path, const std::string &fs_path) {
 void Shader::use() { 
     if(!isShaderValid()) return;
     glUseProgram(_id); 
-}
-
-void Shader::release() {
-    if(_has_created) {
-        glDeleteProgram(_id);
-        _has_created = false;
-    }
 }
 
 void Shader::setBool(const std::string &name, bool value) const {     
