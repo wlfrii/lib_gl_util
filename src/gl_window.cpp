@@ -21,9 +21,11 @@ void errorCallback(int error, const char* desc) {
     GL_UTIL_PRINT("GLFW ERROR: %d, description: %s\n", error, desc);
 }
 
-void clear(uint8_t R, uint8_t G, uint8_t B, uint8_t A, bool is_depth_on) {
+void clear(GLFWwindow* window, float R, float G, float B, float A, 
+           bool is_depth_on) {
+    glfwMakeContextCurrent(window);
     // Clear and reset window color, this step is just a STATUS SETTING
-    glClearColor(R/255.f, G/255.f, B/255.f, A/255.f);   
+    glClearColor(R, G, B, A);   
     // Clear previous color buffer and validate current color buffer
     glClear(GL_COLOR_BUFFER_BIT); 
 
@@ -31,6 +33,11 @@ void clear(uint8_t R, uint8_t G, uint8_t B, uint8_t A, bool is_depth_on) {
     if(is_depth_on){
         glClear(GL_DEPTH_BUFFER_BIT);
     }
+}
+
+void clear(GLFWwindow* window, uint8_t R, uint8_t G, uint8_t B, float A, 
+           bool is_depth_on) {
+    clear(window, 1.f*R/255.f, 1.f*G/255.f, 1.f*B/255.f, 1.f*A/255.f, is_depth_on);
 }
 
 uint8_t init(uint8_t ver_major, uint8_t ver_minor) {
@@ -107,7 +114,7 @@ inline void frameBufferSizeCallback(GLFWwindow*, int width, int height) {
 /* ----------------------------------------------------------------------------------- */
 
 Window::Window(uint16_t width, uint16_t height, const std::string &name,
-               bool is_window_visible)
+               bool is_transparent)
     : width(width)
     , height(height)
     , name(name)
@@ -115,18 +122,19 @@ Window::Window(uint16_t width, uint16_t height, const std::string &name,
 
     // Initialize OpenGL context using default version.
     init();
-    glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
+
+    glfwWindowHint(GLFW_DECORATED, !is_transparent);
+    glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, is_transparent);
 
     /** Create GLFWwindo object **/
-    if(!createGLFWwindow(is_window_visible)){
+    if(!createGLFWwindow()){
         exit(-1);
     }
 
-    _color = {50, 75, 75, 255};
+    _color = {0.f, 0.f, 0.f, 0.f};
 }
 
 Window::~Window() {
-    glfwDestroyWindow(_window);
     glfwTerminate();
 }
 
@@ -137,14 +145,6 @@ GLFWwindow* Window::ptr() const {
 void Window::activate() {
     // Activate current window
     glfwMakeContextCurrent(_window);
-
-    // Monitoring kewboard event
-    if(_callback_kbe){
-        _callback_kbe(this->_window); 
-    }
-    else{
-        processKeyboardEvent();
-    }
 }
 
 void Window::deactivate() {
@@ -158,8 +158,20 @@ void Window::hidden() {
     glfwHideWindow(_window);
 }
 
+void Window::show() {
+    glfwShowWindow(_window);
+}
+
 void Window::clear() {
-    gl_util::clear(_color.R, _color.G, _color.B, _color.A, _is_depth_test_on);
+    gl_util::clear(_window, _color.R, _color.G, _color.B, _color.A, _is_depth_test_on);
+    
+    // Monitoring kewboard event
+    if(_callback_kbe){
+        _callback_kbe(this->_window); 
+    }
+    else{
+        processKeyboardEvent();
+    }
 }
 
 void Window::refresh() {
@@ -186,13 +198,12 @@ void Window::disableDepthTest() {
 }
 
 void Window::setBackgroundColor(uint8_t R, uint8_t G, uint8_t B, uint8_t A) {
-    _color = {R, G, B, A};
+    _color = {1.f*R / 255.f, 1.f*G / 255.f, 1.f*B / 255.f, 1.f*A / 255.f};
 }
 
 bool Window::setToFullScreen(uint8_t monitor_id) {
     bool ret = false;
-    if(_window)
-    {
+    if(_window) {
         // Read the number of the available monitor
         int monitor_count = 0;
         GLFWmonitor** monitor = glfwGetMonitors(&monitor_count);
@@ -211,10 +222,7 @@ bool Window::setToFullScreen(uint8_t monitor_id) {
 }
 
 // --- PRIVATE ---
-bool Window::createGLFWwindow(bool is_window_visible) {
-    // This flag should be set before creating a glfwWindow.
-    glfwWindowHint(GLFW_VISIBLE, is_window_visible);
-
+bool Window::createGLFWwindow() {
     _window = glfwCreateWindow(width, height, name.c_str(), nullptr, shared_window);
     if(_window == nullptr){
         GL_UTIL_LOG("Failed to creat GLFW window.\n");

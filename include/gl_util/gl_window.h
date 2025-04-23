@@ -57,11 +57,11 @@ public:
      * @param width  The width of the window.
      * @param height  The height of the window.
      * @param name  Name of the window.
-     * @param is_window_visible  Flag for creating visible/invisible window.
+     * @param is_transparent  Flag for creating transparent/opaque window.
      * @return  Window object.
      */
     Window(uint16_t width, uint16_t height, const std::string &name,
-           bool is_window_visible = true);
+           bool is_transparent = false);
 
     /**
      * @brief Destroy the Window object.
@@ -80,35 +80,56 @@ public:
     /**
      * @brief Activate current window.
      * 
-     * @remark This is useful when there are more than one GL Window exist.
+     * @remark This is useful when there are more than one window exist.
+     * 
+     * @note If gl_util::Window::clear() is invoked, the calling of this function can be 
+     * omitted.
+     * 
+     * @see gl_util::Window::clear(), gl_util::Window::deactivate().
      */
     void activate();
 
     /**
      * @brief Deactivate current window.
      * 
-     * @remark This is useful when there are more than one GL Window exist.
+     * @note This function is generally no need to invoke. When calling 
+     * gl_util::Window::activate(), current window will become the valid context, the
+     * context at previous moment will be invalid.
+     * 
+     * @see gl_util::Window::activate().
      */
     void deactivate();
 
     /**
      * @brief Hidden current window.
+     * 
+     * @see gl_util::Window::show().
      */
     void hidden();
 
     /**
-     * @brief  Clear the window color and buffer.
+     * @brief Show current window.
+     * 
+     * @see gl_util::Window::show().
+     */
+    void show();
+
+    /**
+     * @brief Clear the window color and buffer.
+     * 
+     * @note Calling this function will make current window as current context, even
+     * through the context at the previous moment is not the current window.
      *
-     * @see gl_util::clear.
+     * @see gl_util::clear().
      */
     void clear();
 
     /**
      * @brief Swap buffers.
      * 
-     * @details OpenGL adopts double-buffers to store the rendered image to avoid
-     * the display flickering that may occur in single buffer mode. Calling this 
-     * function will invoke glfwSwapBuffers in activated window.
+     * @note OpenGL adopts double-buffers to store the rendered image to avoid the 
+     * display flickering that may occur in single buffer mode. Calling this function 
+     * will invoke glfwSwapBuffers in activated window.
      */
     void refresh();
 
@@ -135,6 +156,8 @@ public:
      *  - GL_GREATER
      *  - GL_NOTEQUAL
      *  - GL_GEQUAL
+     * 
+     * @see also gl_util::Window::disableDepthTest();
      */
     void enableDepthTest(size_t depth_cmp = GL_LEQUAL);
 
@@ -178,26 +201,26 @@ public:
 
 private:
     /* Create GLFW window */ 
-    bool createGLFWwindow(bool is_window_visible);
+    bool createGLFWwindow();
     /* Process keyboar event */
     void processKeyboardEvent();
 
 public:
-    const uint16_t    width;     //!< The width of the window
-    const uint16_t    height;    //!< The height of the window
-    const std::string name;      //!< The name of the window
+    const uint16_t    width;     ///< The width of the window
+    const uint16_t    height;    ///< The height of the window
+    const std::string name;      ///< The name of the window
 
 private:
-    GLFWwindow* _window;         //!< The object of GLFWwindow
+    GLFWwindow* _window;         ///< The object of GLFWwindow
 
     struct{
-        uint8_t R;
-        uint8_t G;
-        uint8_t B;
-        uint8_t A;
-    }_color;                     //!< The background color of the window
+        float R;                 ///< Ranged in [0, 1]
+        float G;                 ///< Ranged in [0, 1]
+        float B;                 ///< Ranged in [0, 1]
+        float A;                 ///< Ranged in [0, 1]
+    }_color;                     ///< The background color of the window
 
-    bool _is_depth_test_on;      //!< The flag for depth test
+    bool _is_depth_test_on;      ///< The flag for depth test
 
     // The callback function for keyboard event
     CallbackKeyboardEvent    _callback_kbe;

@@ -33,6 +33,7 @@
 
 #define GL_UTIL_PRINT printf
 
+struct GLFWwindow;
 GL_UTIL_BEGIN
 /**
  * @brief Initialization of gl_util.
@@ -63,14 +64,37 @@ void checkInitStatus();
  * @note This function should be called before any glDraw operation. If the
  * function is called after glDraw operation, the buffer will be cleared.
  * 
+ * @remark This is a overrided function, provided for convinience.
+ * 
+ * @param window The window to be cleared.
  * @param R The red value.
  * @param G The green value.
  * @param B The blue value.
  * @param A The alpha value.
  * @param is_depth_on The flag for clearing depth buffer.
  */
-void clear(uint8_t R = 0, uint8_t G = 0, uint8_t B = 0, uint8_t A = 255, 
-           bool is_depth_on = false);
+void clear(GLFWwindow* window, float R = 0.f, float G = 0.f, float B = 0.f, 
+           float A = 0.f, bool is_depth_on = false);
+
+/**
+ * @brief Clear the window color and buffer.
+ * Generally, there is no need to call this function, the renderring buffer within a
+ * window will be clear after calling gl_util::Window::clear.
+ * 
+ * @note This function should be called before any glDraw operation. If the
+ * function is called after glDraw operation, the buffer will be cleared.
+ * 
+ * @remark This is a overrided function, provided for convinience.
+ * 
+ * @param window The window to be cleared.
+ * @param R The red value.
+ * @param G The green value.
+ * @param B The blue value.
+ * @param A The alpha value.
+ * @param is_depth_on The flag for clearing depth buffer.
+ */
+void clear(GLFWwindow* window, uint8_t R = 0, uint8_t G = 0, uint8_t B = 0, 
+           float A = 0, bool is_depth_on = false);
 
 GL_UTIL_END
 #endif // GL_WARPPER_NS_H_LF
