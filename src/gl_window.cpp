@@ -10,27 +10,23 @@ namespace {
  * @param width 
  * @param height 
  */
-inline void frameBufferSizeCallback(GLFWwindow*, int width, int height)
-{
+inline void frameBufferSizeCallback(GLFWwindow*, int width, int height) {
     /* make sure the viewport matches the new window dimensions; note that
      width and height will be significantly larger than specified on retina 
      displays. */
     glViewport(0, 0, width, height);
 }
 
-}
-
+} // namespace
 
 GL_UTIL_BEGIN
-
 
 Window::Window(uint16_t width, uint16_t height, const std::string &name,
                bool is_window_visible, uint8_t ver_major, uint8_t ver_minor)
     : width(width)
     , height(height)
     , name(name)
-    , _is_depth_test_on(false)
-{
+    , _is_depth_test_on(false) {
     /** Initialize GLFW **/
     glfwInit();
     // Configuration
@@ -60,20 +56,15 @@ Window::Window(uint16_t width, uint16_t height, const std::string &name,
 }
 
 
-Window::~Window()
-{
+Window::~Window() {
     glfwTerminate();
 }
 
-
-GLFWwindow* Window::ptr() const
-{
+GLFWwindow* Window::ptr() const {
     return _window;
 }
 
-
-void Window::activate()
-{
+void Window::activate() {
     // Activate current window
     glfwMakeContextCurrent(_window);
 
@@ -86,32 +77,24 @@ void Window::activate()
     }
 }
 
-
-void Window::deactivate()
-{
+void Window::deactivate() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     glfwMakeContextCurrent(nullptr);
 }
 
-
-void Window::hidden()
-{
+void Window::hidden() {
     glfwDestroyWindow(_window);
     _window = nullptr;
     createGLFWwindow(false);
 }
 
-
-void Window::clear()
-{
+void Window::clear() {
     gl_util::clear(_color.R, _color.G, _color.B, _color.A, _is_depth_test_on);
 }
 
-
-void Window::refresh()
-{
+void Window::refresh() {
     // Swap the double buffer
     glfwSwapBuffers(_window);
 
@@ -119,43 +102,31 @@ void Window::refresh()
     glfwPollEvents();
 }
 
-
-bool Window::shouldClose()
-{
+bool Window::shouldClose() {
     return glfwWindowShouldClose(_window);
 }
 
-
-void Window::release()
-{
+void Window::release() {
     // Terminate GLFW library
     glfwTerminate();
 }
 
-
-void Window::enableDepthTest(size_t depth_cmp)
-{
+void Window::enableDepthTest(size_t depth_cmp) {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(depth_cmp);
     _is_depth_test_on = true;
 }
 
-
-void Window::disableDepthTest()
-{
+void Window::disableDepthTest() {
     glDisable(GL_DEPTH_TEST);
     _is_depth_test_on = false;
 }
 
-
-void Window::setBackgroundColor(uint8_t R, uint8_t G, uint8_t B, uint8_t A)
-{
+void Window::setBackgroundColor(uint8_t R, uint8_t G, uint8_t B, uint8_t A) {
     _color = {R, G, B, A};
 }
 
-
-bool Window::setToFullScreen(uint8_t monitor_id)
-{
+bool Window::setToFullScreen(uint8_t monitor_id) {
     bool ret = false;
     if(_window)
     {
@@ -176,10 +147,8 @@ bool Window::setToFullScreen(uint8_t monitor_id)
     return ret;
 }
 
-
 // --- PRIVATE ---
-bool Window::createGLFWwindow(bool is_window_visible)
-{
+bool Window::createGLFWwindow(bool is_window_visible) {
     // This flag should be set before creating a glfwWindow.
     glfwWindowHint(GLFW_VISIBLE, is_window_visible);
 
@@ -200,16 +169,37 @@ bool Window::createGLFWwindow(bool is_window_visible)
     return true;
 }
 
-void Window::processKeyboardEvent()
-{
+void Window::processKeyboardEvent() {
     if(glfwGetKey(_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(_window, true);
 }
 
-
-void Window::setKeyboardEventCallBack(CallbackKeyboardEvent callbackfunc)
-{
+void Window::setKeyboardEventCallBack(CallbackKeyboardEvent callbackfunc) {
     _callback_kbe = callbackfunc;
+}
+
+/* ----------------------------------------------------------------------------------- */
+/*                                    Window Utility                                   */
+/* ----------------------------------------------------------------------------------- */
+
+bool initGLAD() {
+    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
+        GL_UTIL_LOG("Failed to initialize GLAD.\n");
+        return false;
+    }
+    return true;
+}
+
+void clear(uint8_t R, uint8_t G , uint8_t B, uint8_t A, bool is_depth_on) {
+    // Clear and reset window color, this step is just a STATUS SETTING
+    glClearColor(R/255.f, G/255.f, B/255.f, A/255.f);   
+    // Clear previous color buffer and validate current color buffer
+    glClear(GL_COLOR_BUFFER_BIT); 
+
+    // Clear depth buffer if the Depth Test Enabled
+    if(is_depth_on){
+        glClear(GL_DEPTH_BUFFER_BIT);
+    }
 }
 
 GL_UTIL_END

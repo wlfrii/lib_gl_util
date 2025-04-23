@@ -1,6 +1,6 @@
 /** -------------------------------------------------------------------------------------
  *																		
- *   				        OpenGL Utilities 					
+ *   				                 OpenGL Utilities 					
  *																		
  * @file 		gl_window.h 
  * 
@@ -52,6 +52,8 @@ class Window {
 public:
     /**
      * @brief Construct a new Window object.
+     * 
+     * @details When constructing the Window object, GLAD will be initialized.
      * 
      * @param width  The width of the window.
      * @param height  The height of the window.
@@ -210,9 +212,9 @@ private:
     CallbackKeyboardEvent    _callback_kbe;
 };
 
-/* ------------------------------------------------------------------- */
-/*                            Window Utility                           */
-/* ------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------- */
+/*                                    Window Utility                                   */
+/* ----------------------------------------------------------------------------------- */
 
 /**
  * @brief GLAD load all the OpenGL function pointers
@@ -221,36 +223,20 @@ private:
  * 
  * @return true if success, otherwise return false 
  * 
- * NOTE, the GLAD was initialized if any gl_util::Window was created.
+ * @note The GLAD was initialized if any gl_util::Window was created.
  */
-inline bool initGLAD()
-{
-    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-        GL_UTIL_LOG("Failed to initialize GLAD.\n");
-        return false;
-    }
-    return true;
-}
+bool initGLAD();
 
 
 /**
- * @brief Clear the window color and buffer
- * . Same as the class function Window::clear().
- * NOTE, this function should be called before any glDraw operation. If the
+ * @brief Clear the window color and buffer.
+ * Same as the class function gl_util::Window::clear().
+ * 
+ * @note This function should be called before any glDraw operation. If the
  * function is called after glDraw operation, the buffer will be cleared.
  */
-inline void clear(uint8_t R = 50, uint8_t G = 75, uint8_t B = 75, uint8_t A = 255, bool is_depth_on = false)
-{
-    // Clear and reset window color, this step is just a STATUS SETTING
-    glClearColor(R/255.f, G/255.f, B/255.f, A/255.f);   
-    // Clear previous color buffer and validate current color buffer
-    glClear(GL_COLOR_BUFFER_BIT); 
-
-    // Clear depth buffer if the Depth Test Enabled
-    if(is_depth_on){
-        glClear(GL_DEPTH_BUFFER_BIT);
-    }
-}
+void clear(uint8_t R = 0, uint8_t G = 0, uint8_t B = 0, uint8_t A = 255, 
+           bool is_depth_on = false);
 
 GL_UTIL_END
 #endif // GL_UTIL_WINDOW_H_LF
