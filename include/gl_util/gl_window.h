@@ -46,7 +46,6 @@ typedef std::function<void(GLFWwindow* window)> CallbackKeyboardEvent;
 
 /**
  * @brief A windows class which help to manage GLFWwindow object.
- * The default GLFW version is 3 for MAJOR VERSION and 3 for MINOR VERSION.
  */
 class Window {
 public:
@@ -59,13 +58,10 @@ public:
      * @param height  The height of the window.
      * @param name  Name of the window.
      * @param is_window_visible  Flag for creating visible/invisible window.
-     * @param ver_major The major version of glfw.
-     * @param ver_minor The minor version of glfw.
      * @return  Window object.
      */
     Window(uint16_t width, uint16_t height, const std::string &name,
-           bool is_window_visible = true,
-           uint8_t ver_major = 3, uint8_t ver_minor = 3);
+           bool is_window_visible = true);
 
     /**
      * @brief Destroy the Window object.
@@ -211,27 +207,6 @@ private:
 /*                                    Window Utility                                   */
 /* ----------------------------------------------------------------------------------- */
 
-/**
- * @brief GLAD load all the OpenGL function pointers
- * . GLAD is used to manage the pointers of OpenGL functions, so the 
- * intialization for GLAD should be done before call any OpenGL interface.
- * 
- * @return true if success, otherwise return false 
- * 
- * @note The GLAD was initialized if any gl_util::Window was created.
- */
-bool initGLAD();
-
-
-/**
- * @brief Clear the window color and buffer.
- * Same as the class function gl_util::Window::clear().
- * 
- * @note This function should be called before any glDraw operation. If the
- * function is called after glDraw operation, the buffer will be cleared.
- */
-void clear(uint8_t R = 0, uint8_t G = 0, uint8_t B = 0, uint8_t A = 255, 
-           bool is_depth_on = false);
 
 GL_UTIL_END
 #endif // GL_UTIL_WINDOW_H_LF
