@@ -7,28 +7,57 @@ VAVBEBO::VAVBEBO()
 }
 
 VAVBEBO::~VAVBEBO() { 
-    release(); 
+    if(_is_bind){
+        glDeleteVertexArrays(1, &_vao);
+        glDeleteBuffers(1, &_vbo);
+        glDeleteBuffers(1, &_ebo);
+        _is_bind = false;
+    }
 }
 
-void VAVBEBO::bind(float* vertices, size_t vertices_size, unsigned int* indices, 
+void VAVBEBO::bind(const float* vertices, size_t vertices_size, 
+                   const std::vector<uint8_t>& vertex_desc, const unsigned int* indices, 
                    size_t indices_size, size_t gl_draw_mode) {
-    glGenVertexArrays(1, &_vao);
+    if(!_is_bind) {
+        glGenVertexArrays(1, &_vao);
+    }
     glBindVertexArray(_vao);
     
     // Generate VBO
-    glGenBuffers(1, &_vbo);
-    // Bind the GL_ARRAY_BUFFER to VBO, after which, any calling of the 
-    // GL_ARRAY_BUFFER will configure current binded VBO
+    if(!_is_bind) {
+        glGenBuffers(1, &_vbo);
+    }
+    /* Bind the GL_ARRAY_BUFFER to VBO, after which, any calling of the 
+       GL_ARRAY_BUFFER will configure current binded VBO. */
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    // Copy the input vertices into our GL_ARRAY_BUFFER
+    // Copy the input vertices into our GL_ARRAY_BUFFER.
     glBufferData(GL_ARRAY_BUFFER, vertices_size, vertices, gl_draw_mode);
 
     if(indices){
-        glGenBuffers(1, &_ebo);
+        if(!_is_bind) {
+            glGenBuffers(1, &_ebo);
+        }
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_size, indices, GL_STATIC_DRAW);
     }
     _is_bind = true;
+
+    /* Now, explain the input vertices to OpenGL.
+       Calculte the stride of vertices. */
+    unsigned int vertex_stride = 0;
+    for(const auto val : vertex_desc) {
+        vertex_stride += val;
+    }
+    vertex_stride *= sizeof(float);
+    // Explain each element of a vertex and enable the corresponding vertex property.
+    unsigned int offset = 0;
+    for(int i = 0; i < vertex_desc.size(); i++) {
+        uint8_t esize = vertex_desc[i];
+        glVertexAttribPointer(i, esize, GL_FLOAT, GL_FALSE, vertex_stride, 
+                             (void*)(offset * sizeof(float)));
+        glEnableVertexAttribArray(i);
+        offset += esize;
+    }
 }
 
 void VAVBEBO::bindVertexArray() {
@@ -41,15 +70,6 @@ void VAVBEBO::bindVertexArray() {
 
 void VAVBEBO::unBindVertexArray() {
     glBindVertexArray(0);
-}
-
-void VAVBEBO::release() {
-    if(_is_bind){
-        glDeleteVertexArrays(1, &_vao);
-        glDeleteBuffers(1, &_vbo);
-        glDeleteBuffers(1, &_ebo);
-        _is_bind = false;
-    }
 }
 
 GL_UTIL_END

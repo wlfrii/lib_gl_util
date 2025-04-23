@@ -27,7 +27,7 @@
 #include <glad/glad.h>
 #include <cstddef>
 #include "gl_util_ns.h"
-
+#include <vector>
 GL_UTIL_BEGIN
 
 class VAVBEBO {
@@ -39,6 +39,8 @@ public:
 
     /**
      * @brief Destroy the VAVBEBO object.
+     * 
+     * @details Calling destructor will delete VAO, VBO, EBO objects.
      */
     ~VAVBEBO();
 
@@ -47,6 +49,9 @@ public:
      * 
      * @param vertices  The array of vertices.
      * @param vertices_size  The size of vertices.
+     * @param vertex_desc The description of each vertex, descriping the elements and its
+     *                    size in each vertex. For example, for a vertex consist of 
+     *                    [XYZ-position, RGB-color, UV-texture], the desc=[3,3,2].
      * @param indices   The array of indices of tri-face.
      * @param indices_size  The size of indices
      * @param gl_draw_mode  The mode we want the GPU to manage the vertex data.
@@ -54,8 +59,10 @@ public:
      *  - GL_DYNAMIC_DRAW  The data will be changed.
      *  - GL_STREAM_DRAW  The data will be changed in every render-loop.
      */
-    void bind(float* vertices, size_t vertices_size, unsigned int* indices = nullptr, 
-              size_t indices_size = 0, size_t gl_draw_mode = GL_STATIC_DRAW);
+    void bind(const float* vertices, size_t vertices_size, 
+              const std::vector<uint8_t>& vertex_desc,
+              const unsigned int* indices = nullptr, size_t indices_size = 0, 
+              size_t gl_draw_mode = GL_STATIC_DRAW);
 
     /**
      * @brief  Call OpenGL to bind current VAO to render based on the binded 
@@ -65,15 +72,9 @@ public:
 
     /**
      * @brief Call OpenGL to un bind current VAO ofter rendering.
-     * (Optionally, there is no need to unbind in every render-loop)
+     * (Optionally, there is no need to unbind in every render-loop).
      */
     void unBindVertexArray();
-
-    /**
-     * @brief De-allocate all resources once they've outlived their purpose
-     * This operation is optionally.
-     */
-    void release();
 
 private:
     GLuint _vao;        //!< Vertex Array Object
