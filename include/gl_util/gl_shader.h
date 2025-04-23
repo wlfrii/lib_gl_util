@@ -54,7 +54,7 @@ public:
      * and fragment codes, copied Shader object will share the same GL program, which 
      * might produce problems. So delete this constructor.
      */
-    Shader(const& Shader&) = delete;
+    Shader(const Shader&) = delete;
 
     /**
      * @brief Delete assignment constructor.
