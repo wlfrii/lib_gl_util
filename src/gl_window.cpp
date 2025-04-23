@@ -106,11 +106,6 @@ bool Window::shouldClose() {
     return glfwWindowShouldClose(_window);
 }
 
-void Window::release() {
-    // Terminate GLFW library
-    glfwTerminate();
-}
-
 void Window::enableDepthTest(size_t depth_cmp) {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(depth_cmp);

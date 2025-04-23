@@ -69,6 +69,8 @@ public:
 
     /**
      * @brief Destroy the Window object.
+     * 
+     * @details When calling the destructor, the glfwTerminate will be invoked.
      */
     ~Window();
 
@@ -121,13 +123,6 @@ public:
      *   @retval false Otherwise
      */
     bool shouldClose();
-
-    /**
-     * @brief Terminate GLFW library.
-     *
-     * @details Calling this function will invoke glfwTerminate.
-     */
-    void release();
 
     /**
      * @brief Enable depth test.
