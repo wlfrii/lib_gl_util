@@ -24,8 +24,7 @@ bool Shader::load(const std::string &vs_path, const std::string &fs_path) {
     // Ensure ifstream objects can throw exceptions:
     vs_file.exceptions (std::ifstream::failbit | std::ifstream::badbit);
     fs_file.exceptions (std::ifstream::failbit | std::ifstream::badbit);
-    try 
-    {
+    try {
         // Open files
         vs_file.open(vs_path);
         fs_file.open(fs_path);
@@ -40,8 +39,7 @@ bool Shader::load(const std::string &vs_path, const std::string &fs_path) {
         vertex_code   = vs_stream.str();
         fragment_code = fs_stream.str();
     }
-    catch (std::ifstream::failure& e)
-    {
+    catch (std::ifstream::failure& e) {
         if(_has_created) {
             GL_UTIL_LOG("WARNING: Files are not successfully read, "
                         "keeping use previous vertex and fragment codes.\n");
@@ -85,6 +83,7 @@ bool Shader::load(const std::string &vs_path, const std::string &fs_path) {
 
 void Shader::use() { 
     if(!isShaderValid()) return;
+    // Activate current shader program.
     glUseProgram(_id); 
 }
 
