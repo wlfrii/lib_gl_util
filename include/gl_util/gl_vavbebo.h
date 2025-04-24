@@ -47,6 +47,8 @@ public:
     /**
      * @brief  Bind vertices to current object.
      * 
+     * @note Before binding vertices, indices, make sure a valid context is makde current.
+     * 
      * @param vertices  The array of vertices.
      * @param vertices_size  The size of vertices.
      * @param vertex_desc The description of each vertex, descriping the elements and its
@@ -81,6 +83,8 @@ private:
     GLuint _vbo;        ///< Vertex Buffer Object
     GLuint _ebo;        ///< Element Buffer Object
     bool _is_bind;      ///< Flag to whether bind vertices data
+    bool _has_ebo;      ///< Flag for ebo status.
+    std::vector<uint8_t> _vertex_desc;  ///< Description of each vertex.
 };
 
 GL_UTIL_END

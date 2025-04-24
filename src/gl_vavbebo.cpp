@@ -3,7 +3,8 @@
 GL_UTIL_BEGIN
 
 VAVBEBO::VAVBEBO() 
-    : _is_bind(false) {
+    : _is_bind(false)
+    , _has_ebo(false) {
     checkInitStatus();
 }
 
@@ -40,6 +41,7 @@ void VAVBEBO::bind(const float* vertices, size_t vertices_size,
         }
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_size, indices, GL_STATIC_DRAW);
+        _has_ebo= true;
     }
     _is_bind = true;
 
@@ -59,6 +61,7 @@ void VAVBEBO::bind(const float* vertices, size_t vertices_size,
         glEnableVertexAttribArray(i);
         offset += esize;
     }
+    _vertex_desc = vertex_desc;
 }
 
 void VAVBEBO::bindVertexArray() {
