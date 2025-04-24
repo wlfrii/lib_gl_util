@@ -179,6 +179,14 @@ public:
     void setBackgroundColor(uint8_t R, uint8_t G, uint8_t B, uint8_t A = 255);
 
     /**
+     * @brief Set the start position of window, w.r.t screens.
+     * 
+     * @param x X position.
+     * @param y Y position.
+     */
+    void setPosition(int x, int y);
+
+    /**
      * @brief Set current GLFWwindow to full screen object.
      * 
      * @param[in] monitor_id  The index of the monitor to display (when there are 
