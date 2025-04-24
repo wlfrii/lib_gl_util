@@ -31,7 +31,8 @@
 #define GL_UTIL_LOG(fmt, ...) \
     printf("[%s][%s][%d] " fmt, __FILE__, __func__, __LINE__, ##__VA_ARGS__)
 
-#define GL_UTIL_PRINT printf
+#define GL_UTIL_ERROR(fmt, ...) \
+    fprintf(stderr, fmt, ##__VA_ARGS__)
 
 struct GLFWwindow;
 GL_UTIL_BEGIN

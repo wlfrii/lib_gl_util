@@ -34,10 +34,10 @@ GL_UTIL_BEGIN
 class Projection {
 public:
     /**
-     * @brief Construct a new Projection object
+     * @brief Construct a new Projection object.
      * 
-     * @param fxy  The focal length of camera. For binocular, this value should
-     * be the stereo-rectified focal length value.
+     * @param fxy  The focal length of camera. For binocular, this value should be the 
+     * stereo-rectified focal length value.
      * @param cx  The x coordinta of camera optical axis
      * @param cy  The y coordinta of camera optical axis
      * @param w  The pixel width of camera
@@ -46,8 +46,22 @@ public:
      * @param z_far  The far plane distance
      */
     Projection(float fxy, float cx, float cy, float w, float h, 
-               float z_near = 0.1, float z_far = 100);
+               float z_near, float z_far);
 
+    /**
+     * @brief Construct a new Projection object.
+     * 
+     * @param fxy The focal length of camera. For binocular, this value should be the 
+     * stereo-rectified focal length value.
+     * @param w  The pixel width of camera.
+     * @param h  The pixel height of camera.
+     * @param z_near  The near plane distance.
+     * @param z_far  The far plane distance.
+     * 
+     * @note The (cx, cy) of a camera will replaced assumed as (w/2, h/2), the center 
+     * of the image, when calling this constructor.
+     */
+    Projection(float fxy, float w, float h, float z_near, float z_far);
 
     /**
      * @brief Return the projection matrix based on the setting as in 

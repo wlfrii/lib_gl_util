@@ -18,7 +18,7 @@ static GLFWwindow* shared_window = nullptr;
  * @param desc The error description.
  */
 void errorCallback(int error, const char* desc) {
-    GL_UTIL_PRINT("GLFW ERROR: %d, description: %s\n", error, desc);
+    GL_UTIL_ERROR("GLFW ERROR: %d, description: %s\n", error, desc);
 }
 
 void clear(GLFWwindow* window, float R, float G, float B, float A, 
@@ -49,7 +49,7 @@ uint8_t init(uint8_t ver_major, uint8_t ver_minor) {
     glfwSetErrorCallback(errorCallback);
     // Initialize GLFW.
     if(glfwInit() != GLFW_TRUE) {
-        GL_UTIL_PRINT("GLFW ERROR: cannot initialize GLFW.\n");
+        GL_UTIL_ERROR("GLFW ERROR: cannot initialize GLFW.\n");
         std::exit(-1);
     }
 
@@ -78,7 +78,7 @@ uint8_t init(uint8_t ver_major, uint8_t ver_minor) {
        GLAD is used to manage the pointers of OpenGL functions, so the intialization 
        for GLAD should be done before call any OpenGL interface. */
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-        GL_UTIL_PRINT("GLAD ERROR: failed to initialize GLAD.\n");
+        GL_UTIL_ERROR("GLAD ERROR: failed to initialize GLAD.\n");
         std::exit(-1);
     }
     return 2;
@@ -92,7 +92,7 @@ void checkInitStatus() {
     if(shared_window) {
         return;
     }
-    GL_UTIL_PRINT("ERROR, the GL context has not been initialized. "
+    GL_UTIL_ERROR("ERROR, the GL context has not been initialized. "
         "Before using OpenGL, a valid OpenGL context should be created first, "
         "which could be simply completed by constructing a gl_util::Window object, "
         "or directly calling gl_util::init().\n");
@@ -182,7 +182,7 @@ void Window::refresh() {
     // Swap the double buffer
     glfwSwapBuffers(_window);
 
-    // Check the keys pressed/released, mouse moved etc. events
+    // Check the keys pressed/released, mouse moved etc. events.
     glfwPollEvents();
 }
 
@@ -233,7 +233,6 @@ bool Window::createGLFWwindow() {
         glfwTerminate();
         return false;
     }
-
     // Activate current window
     glfwMakeContextCurrent(_window);
     

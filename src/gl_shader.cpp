@@ -20,7 +20,8 @@ void checkShaderCompileErrors(unsigned int shader, std::string type) {
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
         if (!success) {
             glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-            GL_UTIL_LOG("ERROR: Shader compilation error of type: %s\n\t%s\n", type.c_str(), infoLog);
+            GL_UTIL_ERROR("ERROR: Shader compilation error of type: %s\n\t%s\n", 
+                          type.c_str(), infoLog);
         }
     }
     else {
@@ -28,7 +29,8 @@ void checkShaderCompileErrors(unsigned int shader, std::string type) {
         glGetProgramiv(shader, GL_LINK_STATUS, &success);
         if (!success) {
             glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-            GL_UTIL_LOG("ERROR: Shader program linking error of type: %s\n\t%s\n", type.c_str(), infoLog);
+            GL_UTIL_ERROR("ERROR: Shader program linking error of type: %s\n\t%s\n", 
+                           type.c_str(), infoLog);
         }
     }
 }

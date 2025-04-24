@@ -13,6 +13,10 @@ Projection::Projection(float fxy, float cx, float cy, float w, float h, float z_
     calcProjection();
 }
 
+Projection::Projection(float fxy, float w, float h, float z_near, float z_far)
+    : Projection(fxy, w/2, h/2, w, h, z_near, z_far) {
+}
+
 void Projection::calcProjection() {
     _projection[0][0] = 2 * _fxy / _w;
     _projection[0][2] = 1 - 2 * _cx / _w;

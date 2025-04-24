@@ -43,7 +43,11 @@ More usage examples could by found in my [learn_OpenGL](https://github.com/wlfri
 
 #### Usage
 
-The `gl_util::Window` object should always be created first, since there is a strictly sequentially initialization procedure, specifically:
+There is a strictly sequentially initialization procedure in OpenGL, specifically:
 1. The context of OpenGL includes all the OpenGL status and resources. Before using any OpenGL function, a valid OpenGL context is required.
 2. GLFW is account for creating OpenGL context. When `glfwCreateWindow()` is invoked, a window-related OpenGL context is created.
 3. When a valid OpenGL context, GLFW created, exists, GLAD can load and manage OpenGL function pointers using the current valid OpenGL context. If no valid OpenGL context exist, GLAD cannot work with loading OpenGL function.
+
+To deal with initialization above, two approaches are supported in `gl_util`:
+1. Invoke `gl_util::init()` function before any OpenGL operation.
+2. Just create a `gl_util::Window` object, during which the `gl_util::init()` function is implicated invoked.
