@@ -49,6 +49,17 @@ GL_UTIL_BEGIN
 uint8_t init(uint8_t ver_major = 4, uint8_t ver_minor = 5);
 
 /**
+ * @brief Calling glfwTerminate() to destroy all remaining windows and context, while
+ * restoring any modified gamma ramps and frees any other allocated resources.
+ * 
+ * @note Once this function is called, you must again call gl_util::init() successfully 
+ * before you will be able to use most GLFW functions. If GLFW has been successfully 
+ * initialized, this function should be called before the application exits. If 
+ * initialization fails, there is no need to call this function.
+ */
+void terminate();
+
+/**
  * @brief Check gl_util initialization status.
  * 
  * @note Using gl_util without properly initialization may cause core dump error. This 

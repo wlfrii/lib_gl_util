@@ -84,6 +84,10 @@ uint8_t init(uint8_t ver_major, uint8_t ver_minor) {
     return 2;
 }
 
+void terminate() {
+    glfwTerminate();
+}
+
 void checkInitStatus() {
     if(shared_window) {
         return;
@@ -135,7 +139,7 @@ Window::Window(uint16_t width, uint16_t height, const std::string &name,
 }
 
 Window::~Window() {
-    glfwTerminate();
+    glfwDestroyWindow(_window);
 }
 
 GLFWwindow* Window::ptr() const {
@@ -241,14 +245,12 @@ bool Window::createGLFWwindow() {
 }
 
 void Window::processKeyboardEvent() {
-    if(glfwGetKey(_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    if(glfwGetKey(_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(_window, true);
+    }
 }
 
 void Window::setKeyboardEventCallBack(CallbackKeyboardEvent callbackfunc) {
     _callback_kbe = callbackfunc;
 }
-
-
-
 GL_UTIL_END
