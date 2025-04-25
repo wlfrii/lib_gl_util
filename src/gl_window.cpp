@@ -137,7 +137,7 @@ Window::Window(uint16_t width, uint16_t height, const std::string &name,
     if(!createGLFWwindow()){
         exit(-1);
     }
-
+    enableDepthTest();
     _color = {0.f, 0.f, 0.f, 0.f};
 }
 
