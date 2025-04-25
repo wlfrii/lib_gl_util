@@ -45,7 +45,7 @@ public:
      * @param z_near  The near plane distance
      * @param z_far  The far plane distance
      */
-    Projection(float fxy, float cx, float cy, float w, float h, 
+    Projection(float fxy, float cx, float cy, uint16_t w, uint16_t h, 
                float z_near, float z_far);
 
     /**
@@ -61,7 +61,12 @@ public:
      * @note The (cx, cy) of a camera will replaced assumed as (w/2, h/2), the center 
      * of the image, when calling this constructor.
      */
-    Projection(float fxy, float w, float h, float z_near, float z_far);
+    Projection(float fxy, uint16_t w, uint16_t h, float z_near, float z_far);
+
+    /**
+     * @brief Set the Focal Length object.
+     */
+    void setFocalLength(float fxy);
 
     /**
      * @brief Return the projection matrix based on the setting as in 
@@ -80,6 +85,27 @@ public:
      */
     float cvt2RealDepth(float z_buf) const;
 
+    /**
+     * @brief Return a new gl_util::Projection object which for the Near-Eye Display (NED)
+     * that displays the camera images.
+     * 
+     * @param ocular_fov The full FOV of the NED ocular, in radians.
+     * @param screen_w The width of NED screen, in pixels.
+     * @param screen_h The height of NED screen, in pixels.
+     * @param disp_w The width of display region (defaultly equal to screen_w).
+     * @param disp_h The height of display region (defaultly equal to screen_h).
+     *
+     * @note When display size is set, both display width and display height should be
+     * given. Besides, the given display width and height must have the same aspect-ratio
+     * to the aspect-ratio of camera image.
+     * If no display size is set, full screen region is considered, and the camera image 
+     * is supposed to be adaptively displayed with fixed aspect-ratio.
+     *
+     * @return Projection
+     */
+    Projection adaptToNED(float ocular_fov, uint16_t screen_w, uint16_t screen_h,
+                           uint16_t disp_w = 0, uint16_t disp_h = 0) const;
+
 private:
     /** Calculate projection matrix **/
     void calcProjection();
@@ -90,8 +116,8 @@ private:
     float _fxy;     ///< The focal length of camera
     float _cx;      ///< The optical aixs's x coordinate
     float _cy;      ///< The optical aixs's y coordinate
-    float _w;       ///< The pixel width of camera
-    float _h;       ///< The pixel height of camera
+    uint16_t _w;    ///< The pixel width of camera
+    uint16_t _h;    ///< The pixel height of camera
 
     float _A;       ///< The temporary variable A
     float _B;       ///< The temporary variable B 
