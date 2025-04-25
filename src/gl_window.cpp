@@ -62,7 +62,8 @@ uint8_t init(uint8_t ver_major, uint8_t ver_minor) {
     // commands above. 
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-
+    glfwWindowHint(GLFW_SAMPLES, 4);
+    
     // Initialize shared window.
     // Create a hidden main window
     shared_window = glfwCreateWindow(1, 1, "main", nullptr, nullptr);
@@ -81,6 +82,8 @@ uint8_t init(uint8_t ver_major, uint8_t ver_minor) {
         GL_UTIL_ERROR("GLAD ERROR: failed to initialize GLAD.\n");
         std::exit(-1);
     }
+
+    glEnable(GL_MULTISAMPLE);
     return 2;
 }
 

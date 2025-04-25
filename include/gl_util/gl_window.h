@@ -142,12 +142,13 @@ public:
     bool shouldClose();
 
     /**
-     * @brief Enable depth test.
+     * @brief Enable depth test. 
+     * @note The depth test is enabled as defaultly.
      * 
      * @remark So that OpenGL while detemine which pixel should be showed and which 
      * pixel should be hiddened based on the Z-buffer.
      * 
-     * @param[in] depth_cmp The method to compare deptht, the optional setting are:
+     * @param[in] depth_cmp The method to compare depth, the optional setting are:
      *  - GL_ALWAYS
      *  - GL_NEVER
      *  - GL_LESS
@@ -162,7 +163,9 @@ public:
     void enableDepthTest(size_t depth_cmp = GL_LEQUAL);
 
     /**
-     * @brief Disable depth test
+     * @brief Disable depth test.
+     * 
+     * @note Depth test is a window dependent property.
      * 
      * @see also gl_util::Window::enableDepthTest();
      */
